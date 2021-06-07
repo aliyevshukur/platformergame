@@ -28,8 +28,8 @@ public class Camera extends GameObject {
     public void tick() {
 //        this.x += ((player.getX() + player.getWidth() - x) - Game.WIDTH / 2) * 0.05f;
 //        this.y += ((player.getY() + player.getHeight() - y) - Game.HEIGHT / 2) * 0.05f;
-        this.x += ((player.getX() + player.getBounds().width - x) - Game.WIDTH / 2) * 0.005f;
-        this.y += ((player.getY() + player.getBounds().height - y) - Game.HEIGHT / 2) * 0.005f;
+        this.x += ((player.getX() + player.getBounds().width - x) - Game.WIDTH / 2) * 0.01f;
+        this.y += ((player.getY() + player.getBounds().height - y) - Game.HEIGHT / 2) * 0.01f;
 
         if (x <= 0) {
             x = 0;

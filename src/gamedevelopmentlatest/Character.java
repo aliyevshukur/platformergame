@@ -16,9 +16,9 @@ public abstract class Character extends GameObject {
     Handler handler;
     int health = 100;
     int point = 0;
-    protected float speed = 0.05f;
-    protected float friction = 0.01f;
-    protected boolean isJumping;
+    protected float speed = 0.04f;
+    protected float friction = 0.02f;
+    protected boolean isJumping = true;
 
     public Character(int x, int y, ID id) {
         super(x, y, id);
@@ -43,30 +43,32 @@ public abstract class Character extends GameObject {
                     if (getBounds().intersects(temp.getBounds())) {
 
                         if (velY > 0) {
-                            System.out.println("GROUND " + velY);
                             if (getBounds(boundsType.downBounds).intersects(temp.getBounds(boundsType.upBounds))) {
                                 y = temp.getY() - height;
                                 velY = 0;
                                 isJumping = false;
+                                onAir = false;
                             }
                         } else if (velY < 0) {
                             if (getBounds(boundsType.upBounds).intersects(temp.getBounds(boundsType.downBounds))) {
                                 y = temp.getY() + temp.getBounds().height;
                                 velY *= -1.2;
+                                isJumping = false;
+                                onAir=false;
                             }
                         }
 
                         if (velX < 0) {
                             if (getBounds(boundsType.leftBounds).intersects(temp.getBounds())) {
-                                x = temp.getX() - temp.getBounds().width;
-                                velX = 0;
+//                                x = temp.getX() - temp.getBounds().width;
+//                                velX = 0;
                             }
                         }
 
                         if (velX > 0) {
                             if (getBounds(boundsType.rightBounds).intersects(temp.getBounds())) {
-                                x = temp.getX() - width;
-                                velX = 0;
+//                                x = temp.getX() - width;
+//                                velX = 0;
                             }
                         }
                     }

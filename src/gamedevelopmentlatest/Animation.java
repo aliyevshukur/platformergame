@@ -78,49 +78,49 @@ public class Animation {
             switch (id) {
 
                 case PLAYER:
-                    begin = 4; //col
+                    begin = 0; //col
                     count = 4; //row
-                    row = 0; //range
+                    row = 9; //range
                     list = player;
                     break;
                 case GROUND:
                     begin = 1;
-                    count = 0;
-                    row = 0;
+                    count = 0;  
+                    row = 1;
                     list = ground;
                     break;
-                case PLATFORM:
-                    begin = 4;
-                    count = 0;
-                    row = 3;
-                    list = platform;
-                    break;
-                case SURPRIZE_BOX:
-                    begin = 9;
-                    count = 0;
-                    row = 0;
-                    list = surprizeBox;
-                    break;
-                case WALL:
-                    begin = 8;
-                    count = 1;
-                    row = 4;
-                    list = wall;
-                    break;
-                case ENEMY:
-                    begin = 0;
-                    count = 3;
-                    row = 5;
-                    list = enemy1;
-                    break;
+//                case PLATFORM:
+//                    begin = 4;
+//                    count = 0;
+//                    row = 3;
+//                    list = platform;
+//                    break;
+//                case SURPRIZE_BOX:
+//                    begin = 9;
+//                    count = 0;
+//                    row = 0;
+//                    list = surprizeBox;
+//                    break;
+//                case WALL:
+//                    begin = 8;
+//                    count = 1;
+//                    row = 4;
+//                    list = wall;
+//                    break;
+//                case ENEMY:
+//                    begin = 0;
+//                    count = 3;
+//                    row = 5;
+//                    list = enemy1;
+//                    break;
                 default:
                     list = new ArrayList();
                     break;
             }
 
         }
-        for (int i = begin; i <= (count + begin); ++i) {
-            list.add(spreadSheet.getSubimage( 16 * i, 16 * count, bitWidth, bitHeight));
+        for (int i = begin; i <= row; ++i) {
+            list.add(spreadSheet.getSubimage(16 * i, 16 * count, bitWidth, bitHeight));
         }
 
         System.out.println("Animation" + list.toString());
@@ -148,28 +148,27 @@ public class Animation {
 
     public static void animatePlayer(Player obj, Graphics g) {
         int index = 0;
-        // 0-13
-        // left 0-6 right 7-13
-
+        // 0-9
+        // left 0-2 right 3-5 jump 6 -8 down 9
         if (obj.onAir) {
-            if (obj.direction == 1) {
-                g.drawImage(player.get(1),  obj.getX(),  obj.getY(), obj.width, obj.height, null);
-            } else {
-                g.drawImage(player.get(12), obj.getX(), obj.getY(), obj.width, obj.height, null);
-            }
+//            if (obj.direction == 1) {
+//                g.drawImage(player.get(1),  obj.getX(),  obj.getY(), obj.width, obj.height, null);
+//            } else {
+            g.drawImage(player.get(7), obj.getX(), obj.getY(), obj.width, obj.height, null);
+//            }
         } else if (obj.direction == 1) {
             if (obj.velX < -0.5) {
-                index = 5 -  obj.getX() % 30 / 10;
-                g.drawImage(player.get(index),  obj.getX(),  obj.getY(), obj.width, obj.height, null);
+                index = 2 - obj.getX() % 30 / 10;
+                g.drawImage(player.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
             } else {
-                g.drawImage(player.get(6),  obj.getX(),  obj.getY(), obj.width, obj.height, null);
-            }
+                g.drawImage(player.get(1), obj.getX(), obj.getY(), obj.width, obj.height, null);
+            } 
         } else if (obj.direction == 2) {
             if (obj.velX > 0.5) {
-                index = 10 -  obj.getX() % 30 / 10;
-                g.drawImage(player.get(index),  obj.getX(),  obj.getY(), obj.width, obj.height, null);
+                index = 5 - obj.getX() % 30 / 10;
+                g.drawImage(player.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
             } else {
-                g.drawImage(player.get(7),  obj.getX(),  obj.getY(), obj.width, obj.height, null);
+                g.drawImage(player.get(4), obj.getX(), obj.getY(), obj.width, obj.height, null);
             }
         }
     }

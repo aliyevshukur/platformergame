@@ -18,7 +18,7 @@ public class Player extends Character {
     private boolean[] keyPressed = new boolean[7];
     private final Color color;
     private int health;
-    private final float jumpingSpeed = 3;
+    private final float jumpingSpeed = 2;
 
     public Player(int x, int y, ID id) {
         super(x, y, id);
@@ -57,7 +57,9 @@ public class Player extends Character {
         } else if (velX > 0.5) {
             direction = 2;
         }
+
         keyInput();
+        
         if (onAir) {
             velY += gravity;
         } else {
@@ -74,7 +76,7 @@ public class Player extends Character {
     }
 
     private void keyInput() {
-        if (!isFalling) {
+        if (!isJumping) {
             if (keyPressed[1]) {
                 velX += -speed;
             }
@@ -82,9 +84,9 @@ public class Player extends Character {
                 velX += speed;
             }
             if (keyPressed[0]) {
-                if (!isFalling) {
+                if (!isJumping) {
                     velY -= jumpingSpeed;
-                    isFalling = true;
+                    isJumping = true;
                 }
             }
         } else {
@@ -105,7 +107,7 @@ public class Player extends Character {
     public void render(Graphics g) {
 
         Animation.animateObject(g, this);
-        g.drawImage(Animation.player.get(0), x, y, width, height, null);
+//        g.drawImage(Animation.player.get(0), x, y, width, height, null);
 //        g.setColor(Color.green);
 //        g.fillRect(x, y, width, height);
 //        g.setColor(Color.green);
