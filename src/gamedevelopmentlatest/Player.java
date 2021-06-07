@@ -28,7 +28,7 @@ public class Player extends Character {
         velY = 0;
         velX = 0;
         width = 16 * GSpace.multSize;
-        height = 16 * GSpace.multSize;
+        height = 24 * GSpace.multSize;
 
         keyPressed[0] = false;
         keyPressed[1] = false;
@@ -51,7 +51,6 @@ public class Player extends Character {
 
     @Override
     public void tick() {
-
         if (velX < -0.5) {
             direction = 1;
         } else if (velX > 0.5) {
@@ -59,7 +58,7 @@ public class Player extends Character {
         }
 
         keyInput();
-        
+
         if (onAir) {
             velY += gravity;
         } else {
@@ -76,25 +75,30 @@ public class Player extends Character {
     }
 
     private void keyInput() {
+
         if (!isJumping) {
-            if (keyPressed[1]) {
-                velX += -speed;
-            }
-            if (keyPressed[2]) {
-                velX += speed;
-            }
-            if (keyPressed[0]) {
-                if (!isJumping) {
-                    velY -= jumpingSpeed;
-                    isJumping = true;
+
+            if (velX < 3) {
+                if (keyPressed[1]) {
+                    velX += -speed;
+                }
+                if (keyPressed[2]) {
+                    velX += speed;
+                }
+
+                if (keyPressed[0]) {
+                    if (!isJumping) {
+                        velY -= jumpingSpeed;
+                        isJumping = true;
+                    }
                 }
             }
         } else {
             if (keyPressed[1]) {
-                velX += -speed / 2;
+                velX += -speed / 5;
             }
             if (keyPressed[2]) {
-                velX += speed / 2;
+                velX += speed / 5;
             }
         }
 

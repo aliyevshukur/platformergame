@@ -16,32 +16,33 @@ public class Enemy extends Character {
 
     public int hitCount = 0;
 
-    public Enemy(int x, int y, ID id) {
+    public Enemy(int x, int y, ID id, int width, int height) {
         super(x, y, id);
-        speed = 1f;
+        speed = 0.1f;
         velX = speed;
         direction = 2;
+        this.width = width;
+        this.height = height;
     }
 
     @Override
     public void tick() {
-
         if (!alive) {
             hitCount++;
             if (hitCount > 100) {
                 handler.removeObject(this);
             } else {
-                if (onAir) {
-                    velY += gravity;
-                }
+        if (onAir) {
+            velY += gravity;
+        }
 
-                if ((x - GSpace.getPlayer().getX() > 0) & direction == 2) {
-                    direction = 1;
-                    velX = -1 * speed;
-                } else if ((x - GSpace.getPlayer().getX() < 0) & direction == 1) {
-                    direction = 2;
-                    velX = 1 * speed;
-                }
+        if ((x - GSpace.getPlayer().getX() > 0) & direction == 2) {
+            direction = 1;
+            velX = -1 * speed;
+        } else if ((x - GSpace.getPlayer().getX() < 0) & direction == 1) {
+            direction = 2;
+            velX = 1 * speed;
+        }
             }
         }
 
@@ -57,13 +58,11 @@ public class Enemy extends Character {
     @Override
     public void render(Graphics g) {
 //        if (alive) {
-//            g.drawImage(Animation.enemy1.get(1), width, width, null);
+        g.drawImage(Animation.enemy1.get(0), width, width, null);
 //        } else {
 //            g.drawImage(Animation.enemy1.get(0), width, width, null);
 //        }
 
-        g.setColor(Color.red);
-        g.fillRect(x, y, width, height);
     }
 
 }

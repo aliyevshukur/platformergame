@@ -39,17 +39,13 @@ public class Game extends Canvas implements Runnable {
         player = GSpace.getPlayer();
         camera = GSpace.getCamera();
         hud = GSpace.getHud();
+
         animation = new Animation();
 
-        handler.addObject(player);
-        enemy = new Enemy(200, 200, ID.ENEMY);
-        handler.addObject(enemy);
-
-        handler.addObject(camera);
         addKeyListener(new KeyInput());
         new Window(WIDTH, HEIGHT, "Game Development", this);
 
-        this.start();
+//        this.start();
     }
 
     public synchronized void start() {
@@ -109,7 +105,7 @@ public class Game extends Canvas implements Runnable {
     private void render() {
         BufferStrategy bs = this.getBufferStrategy();
         if (bs == null) {
-            this.createBufferStrategy(3);
+            this.createBufferStrategy(2);
             return;
         }
         Graphics g = bs.getDrawGraphics();
@@ -130,7 +126,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void loadLevel() {
-       ImageLoader.loadLevel(ImageLoader.loadImage("\\res\\world.png", this), handler, player);
+        ImageLoader.loadLevel(ImageLoader.loadImage("\\res\\world.png", this), handler, player);
 //        for (int i = 0; i < 100; i++) {
 //            handler.addObject(new Ground(300, i * 16, ID.GROUND));
 //        }

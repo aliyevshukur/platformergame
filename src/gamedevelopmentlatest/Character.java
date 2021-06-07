@@ -16,8 +16,8 @@ public abstract class Character extends GameObject {
     Handler handler;
     int health = 100;
     int point = 0;
-    protected float speed = 0.04f;
-    protected float friction = 0.02f;
+    protected float speed = 0.3f;
+    protected float friction = 0.15f;
     protected boolean isJumping = true;
 
     public Character(int x, int y, ID id) {
@@ -137,8 +137,8 @@ public abstract class Character extends GameObject {
 
                     if (getBounds(boundsType.underBounds).intersects(temp.getBounds())) {
                         if (id == ID.PLAYER) {
-                            temp.hit(this);
-                            velY += 1;
+//                            temp.hit(this);
+//                            velY += 1;
                         }
                     }
 

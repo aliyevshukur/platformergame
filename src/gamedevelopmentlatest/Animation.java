@@ -56,12 +56,12 @@ public class Animation {
     }
 
     private void loadSpreadSheet() {
-        loadSheet(ID.PLAYER, 16, 16);
+        loadSheet(ID.PLAYER, 16, 24);
         loadSheet(ID.GROUND, 16, 16);
-        loadSheet(ID.PLATFORM, 48, 8);
+        loadSheet(ID.PLATFORM, 48, 16);
         loadSheet(ID.SURPRIZE_BOX, 16, 16);
         loadSheet(ID.WALL, 16, 16);
-        loadSheet(ID.ENEMY, 16, 16);
+        loadSheet(ID.ENEMY, 16, 24);
 
     }
 
@@ -79,22 +79,22 @@ public class Animation {
 
                 case PLAYER:
                     begin = 0; //col
-                    count = 4; //row
-                    row = 9; //range
+                    count = 24; //row
+                    row = 17; //range
                     list = player;
                     break;
                 case GROUND:
                     begin = 1;
-                    count = 0;  
+                    count = 0;
                     row = 1;
                     list = ground;
                     break;
-//                case PLATFORM:
-//                    begin = 4;
-//                    count = 0;
-//                    row = 3;
-//                    list = platform;
-//                    break;
+                case PLATFORM:
+                    begin = 5;
+                    count = 20;
+                    row = 0;
+                    list = platform;
+                    break;
 //                case SURPRIZE_BOX:
 //                    begin = 9;
 //                    count = 0;
@@ -107,19 +107,19 @@ public class Animation {
 //                    row = 4;
 //                    list = wall;
 //                    break;
-//                case ENEMY:
-//                    begin = 0;
-//                    count = 3;
-//                    row = 5;
-//                    list = enemy1;
-//                    break;
+                case ENEMY:
+                    begin = 0;
+                    count = 26;
+                    row = 15;
+                    list = enemy1;
+                    break;
                 default:
                     list = new ArrayList();
                     break;
             }
 
         }
-        for (int i = begin; i <= row; ++i) {
+        for (int i = begin; i <= (row + begin); ++i) {
             list.add(spreadSheet.getSubimage(16 * i, 16 * count, bitWidth, bitHeight));
         }
 
@@ -148,27 +148,27 @@ public class Animation {
 
     public static void animatePlayer(Player obj, Graphics g) {
         int index = 0;
-        // 0-9
-        // left 0-2 right 3-5 jump 6 -8 down 9
+        // 0-18
+        // left 0-8 right 9-17 jump 6 -8 down 9
         if (obj.onAir) {
-//            if (obj.direction == 1) {
-//                g.drawImage(player.get(1),  obj.getX(),  obj.getY(), obj.width, obj.height, null);
-//            } else {
-            g.drawImage(player.get(7), obj.getX(), obj.getY(), obj.width, obj.height, null);
-//            }
+            if (obj.direction == 1) {
+                g.drawImage(player.get(3), obj.getX(), obj.getY(), obj.width, obj.height, null);
+            } else {
+                g.drawImage(player.get(13), obj.getX(), obj.getY(), obj.width, obj.height, null);
+            }
         } else if (obj.direction == 1) {
             if (obj.velX < -0.5) {
-                index = 2 - obj.getX() % 30 / 10;
+                index = 8 - obj.getX() % 90 / 10;
                 g.drawImage(player.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
             } else {
-                g.drawImage(player.get(1), obj.getX(), obj.getY(), obj.width, obj.height, null);
-            } 
+                g.drawImage(player.get(9), obj.getX(), obj.getY(), obj.width, obj.height, null);
+            }
         } else if (obj.direction == 2) {
             if (obj.velX > 0.5) {
-                index = 5 - obj.getX() % 30 / 10;
+                index = 17 - obj.getX() % 90 / 10;
                 g.drawImage(player.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
             } else {
-                g.drawImage(player.get(4), obj.getX(), obj.getY(), obj.width, obj.height, null);
+                g.drawImage(player.get(10), obj.getX(), obj.getY(), obj.width, obj.height, null);
             }
         }
     }

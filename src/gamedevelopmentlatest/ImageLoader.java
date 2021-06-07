@@ -40,21 +40,12 @@ public class ImageLoader {
                 int blue = pixel & 0x0ff;
 
                 if (red == 255 && green == 0 && blue == 0) {
-//                    handler.addObject(new SurprizeBox(xx * size, yy * size, ID.SURPRIZE_BOX));
-
+                    handler.addObject(new Platform(xx * 16 * size, yy * 4 * size, ID.PLATFORM, 48 * size, 8 * size));
                 } else if (red == 0 && green == 255 && blue == 0) {
-//                    handler.addObject(new Wall(xx * size, yy * size, ID.WALL));
-
                     handler.addObject(new Ground(xx * 16 * size, yy * 8, ID.GROUND, 16 * size, 16 * size));
-
-                } //                else if (red == 0 && green == 255 && blue == 255) {
-                //                    handler.addObject(new Enemy(xx * size, yy * size, ID.ENEMY));
-                //                } 
-                //                else if (red == 0 && green == 255 && blue == 0) {
-                //                    handler.addObject(new Ground(xx * size, yy * size, ID.GROUND, 32 * size, 32 * size));
-                //                } 
-                else if (red == 0 && green == 0 && blue == 255) {
-
+                } else if (red == 255 && green == 255 && blue == 0) {
+                    handler.addObject(new Enemy(xx * 16 * size, yy * 4 * size, ID.ENEMY, 16 * size, 24 * size));
+                } else if (red == 0 && green == 0 && blue == 255) {
                     player.setX(xx * size);
                     player.setY(yy * size);
                     handler.addObject(player);
