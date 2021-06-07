@@ -15,15 +15,14 @@ import java.awt.Graphics;
  */
 public class HUD {
 
-//    private final Player player;
+    private final Player player;
 
-//    public HUD() {
-//        this.player = GSpace.getPlayer();
-//    }
+    public HUD() {
+        this.player = GSpace.getPlayer();
+    }
 
     public void render(Graphics g) {
-         g.setColor(Color.red);
-        g.fillRect(100, 100, 100, 100);
+    
 
     }
 }

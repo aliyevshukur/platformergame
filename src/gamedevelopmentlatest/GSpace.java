@@ -11,23 +11,25 @@ package gamedevelopmentlatest;
  */
 public class GSpace {
 
+    static float cameraBoom = 1;
     static int multSize = 2;
+    static int objectSize = 16;
     private static Handler handler;
     private static Game game;
-//    private static Player player;
+    private static Player player;
     private static HUD hud;
-//    private static Camera camera;
+    private static Camera camera;
 
-//    public static Camera getCamera() {
-//        if (camera == null) {
-//            camera = new Camera();
-//        }
-//        return camera;
-//    }
-//
-//    public static void setCamera(Camera camera) {
-//        GSpace.camera = camera;
-//    }
+    public static Camera getCamera() {
+        if (camera == null) {
+            camera = new Camera();
+        }
+        return camera;
+    }
+
+    public static void setCamera(Camera camera) {
+        GSpace.camera = camera;
+    }
 
     public static HUD getHud() {
         if (hud == null) {
@@ -61,26 +63,26 @@ public class GSpace {
         GSpace.game = game;
     }
 
-//    public static Player getPlayer() {
-//        if (player == null) {
-//            player = new Player(10, 10, ID.PLAYER);
-//            if (handler == null) {
-//                getHandler();
-//                handler.addObject(player);
-//            }
-//        }
-//        return player;
-//    }
-//
-//    public static Player getPlayer(Player player) {
-//        if (player == null) {
-//            GSpace.player = player;
-//            if (handler == null) {
-//                getHandler();
-//            }
-//            handler.addObject(player);
-//        }
-//
-//        return GSpace.player;
-//    }
+    public static Player getPlayer() {
+        if (player == null) {
+            player = new Player(10, 10, ID.PLAYER);
+            if (handler == null) {
+                getHandler();
+                handler.addObject(player);
+            }
+        }
+        return player;
+    }
+
+    public static Player getPlayer(Player player) {
+        if (player == null) {
+            GSpace.player = player;
+            if (handler == null) {
+                getHandler();
+            }
+            handler.addObject(player);
+        }
+
+        return GSpace.player;
+    }
 }

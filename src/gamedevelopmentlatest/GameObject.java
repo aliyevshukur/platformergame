@@ -27,10 +27,10 @@ public abstract class GameObject implements Serializable {
     protected final int stateY;
 
     protected boolean isFalling = true;
-    protected float gravity = 0.0f;
+    protected float gravity = 0.05f;
     protected boolean alive = true;
 //    protected static AnimationMario animation = new AnimationMario();
-    
+
     protected enum boundsType {
         upBounds, downBounds, rightBounds, leftBounds, underBounds, centerBounds, upSurface;
     }
@@ -39,8 +39,8 @@ public abstract class GameObject implements Serializable {
         this.x = x;
         this.y = y;
         this.id = id;
-        this.stateX =  x;
-        this.stateY =  y;
+        this.stateX = x;
+        this.stateY = y;
     }
 
     public int getX() {
@@ -120,7 +120,7 @@ public abstract class GameObject implements Serializable {
     }
 
     public Rectangle getBounds() {
-        return new Rectangle( x,  y, width, height);
+        return new Rectangle(x, y, width, height);
     }
 
     public Rectangle getBounds(boundsType type) {
@@ -130,9 +130,9 @@ public abstract class GameObject implements Serializable {
             case upBounds:
                 return new Rectangle(x + width / 6, y, width - 2 * width / 6, height / 4);
             case downBounds:
-                return new Rectangle(x + width / 6, y, width - 2 * width / 6, height / 4 + height / 8);
-            case underBounds:
                 return new Rectangle(x + width / 6, y + 3 * height / 4, width - 2 * width / 6, height / 4);
+            case underBounds:
+                return new Rectangle(x + width / 6, y + 3 * height / 4, width - 2 * width / 6, height / 4 + height/8);
             case leftBounds:
                 return new Rectangle(x, y + height / 6, width / 4, height - height / 3);
             case rightBounds:
