@@ -27,7 +27,7 @@ public abstract class GameObject implements Serializable {
     protected final int stateY;
 
     protected boolean isFalling = true;
-    protected float gravity = 0.07f;
+    protected float gravity = 0.0f;
     protected boolean alive = true;
 //    protected static AnimationMario animation = new AnimationMario();
     

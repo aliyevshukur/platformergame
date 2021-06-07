@@ -54,15 +54,15 @@ public class Handler {
         this.objects.removeAll(objects);
     }
 
-    public void sort() {
-        for (int i = 0; i < objects.size(); i++) {
-            GameObject tempObject = objects.get(i);
-            if (tempObject != null && tempObject.getId() == ID.PLAYER) {
-                GameObject temp = objects.get(objects.size() - 1);
-                objects.set(i, temp);
-                objects.set(objects.size() - 1, tempObject);
-            }
-        }
-    }
+//    public void sort() {
+//        for (int i = 0; i < objects.size(); i++) {
+//            GameObject tempObject = objects.get(i);
+//            if (tempObject != null && tempObject.getId() == ID.PLAYER) {
+//                GameObject temp = objects.get(objects.size() - 1);
+//                objects.set(i, temp);
+//                objects.set(objects.size() - 1, tempObject);
+//            }
+//        }
+//    }
 
 }

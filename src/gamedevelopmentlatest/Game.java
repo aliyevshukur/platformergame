@@ -10,7 +10,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,26 +22,31 @@ public class Game extends Canvas implements Runnable {
     public static final int WIDTH = 1200, HEIGHT = 2 * WIDTH / 3;
     private Thread thread;
     private Handler handler;
-    private Player player;
-    private Camera camera;
+//    private Player player;
+//    private Enemy enemy;
+//    private Camera camera;
     private HUD hud;
     boolean running = false;
+//    private Animation animation;
 
     public Game() {
         initGame();
-        loadLevel();
+//        loadLevel();
     }
 
     private void initGame() {
         handler = GSpace.getHandler();
-        player = GSpace.getPlayer();
-        camera = GSpace.getCamera();
+//        player = GSpace.getPlayer();
+//        camera = GSpace.getCamera();
         hud = GSpace.getHud();
-        
-        handler.addObject(player);
-        handler.addObject(camera);
+//        animation = new Animation();
 
-        addKeyListener(new KeyInput());
+//        handler.addObject(player);
+//        enemy = new Enemy(200, 200, ID.ENEMY);
+//        handler.addObject(enemy);
+
+//        handler.addObject(camera);
+//        addKeyListener(new KeyInput());
         new Window(WIDTH, HEIGHT, "Game Development", this);
 
         this.start();
@@ -83,12 +87,10 @@ public class Game extends Canvas implements Runnable {
                 tick();
                 delta--;
             }
-
             if (running) {
                 render();
                 frames++;
             }
-
             if ((System.currentTimeMillis() - timer) > 1000) {
                 timer += 1000;
                 System.out.println("FPS :" + frames);
@@ -96,13 +98,12 @@ public class Game extends Canvas implements Runnable {
                 frames = 0;
             }
         }
-
         stop();
     }
 
     private void tick() {
         handler.tick();
-        camera.tick();
+//        camera.tick();
     }
 
     private void render() {
@@ -117,11 +118,11 @@ public class Game extends Canvas implements Runnable {
 
         Graphics2D g2d = (Graphics2D) g;
 
-        g2d.translate(-camera.getX(), -camera.getY());
+//        g2d.translate(-camera.getX(), -camera.getY());
         handler.render(g);
 //        camera.render(g);
-        g2d.translate(camera.getX(), camera.getY());
-        
+//        g2d.translate(camera.getX(), camera.getY());
+
         hud.render(g);
         g.dispose();
         bs.show();
@@ -129,7 +130,10 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void loadLevel() {
-       ImageLoader.loadLevel(ImageLoader.loadImage("\\res\\world.png", this), handler, player);
+//       ImageLoader.loadLevel(ImageLoader.loadImage("\\res\\world.png", this), handler, player);
+        for (int i = 0; i < 100; i++) {
+            handler.addObject(new Ground(300, i * 16, ID.GROUND));
+        }
     }
 
 }
