@@ -61,10 +61,11 @@ public abstract class Character extends GameObject {
 
                         if (velX < 0) {
                             if (getBounds(boundsType.leftBounds).intersects(temp.getBounds())) {
-//                                x = temp.getX() + temp.getBounds().width - width;
+                                x = temp.getX();
 //                                y = temp.getY() - height;
 //
                                 velX = 0;
+//                                velY = 2;
                                 isJumping = false;
                                 onAir = false;
                             }
@@ -72,10 +73,11 @@ public abstract class Character extends GameObject {
 
                         if (velX > 0) {
                             if (getBounds(boundsType.rightBounds).intersects(temp.getBounds())) {
-//                                x = temp.getX() + width;
+                                x = temp.getX() + width;
 //                                y = temp.getY() - height;
 //
                                 velX = 0;
+//                                velY = 2;
                                 isJumping = false;
                                 onAir = false;
                             }
