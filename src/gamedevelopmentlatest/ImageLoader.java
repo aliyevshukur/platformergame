@@ -54,6 +54,8 @@ public class ImageLoader {
                     handler.addObject(new Enemy(xx * 16, yy * 16, ID.ENEMY, 16 * size, 24 * size));
                 } else if (red == 255 && green == 124 && blue == 53) {
                     handler.addObject(new Spawner(xx * 16, yy * 16, ID.SPAWNER, 20 * size, 25 * size));
+                } else if (red == 140 && green == 165 && blue == 255) {
+                    handler.addObject(new RockThrowerEnemy(xx * 16, yy * 16, ID.ROCK_THROWER_ENEMY, 20 * size, 32 * size));
                 } else if (red == 0 && green == 0 && blue == 255) {
                     player.setX(xx);
                     player.setY(yy);
