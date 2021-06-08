@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 /**
- *
  * @author Shukur
  */
 public class ImageLoader {
@@ -49,10 +48,12 @@ public class ImageLoader {
                     handler.addObject(new Ground(xx * 32, yy * 32, ID.GROUND, 16 * size, 16 * size, 4));
                 } else if (red == 120 && green == 120 && blue == 120) {
                     handler.addObject(new Ground(xx * 32, yy * 32, ID.GROUND, 16 * size, 16 * size, 1));
-                } else if (red == 140 && green == 140& blue == 140) {
+                } else if (red == 140 && green == 140 & blue == 140) {
                     handler.addObject(new Ground(xx * 32, yy * 32, ID.GROUND, 16 * size, 16 * size, 2));
                 } else if (red == 255 && green == 255 && blue == 0) {
                     handler.addObject(new Enemy(xx * 16, yy * 16, ID.ENEMY, 16 * size, 24 * size));
+                } else if (red == 255 && green == 124 && blue == 53) {
+                    handler.addObject(new Spawner(xx * 16, yy * 16, ID.SPAWNER, 20 * size, 25 * size));
                 } else if (red == 0 && green == 0 && blue == 255) {
                     player.setX(xx);
                     player.setY(yy);
