@@ -15,9 +15,9 @@ import java.awt.Rectangle;
  */
 public class Player extends Character {
 
-    private boolean[] keyPressed = new boolean[7];
+    private boolean[] keyPressed = new boolean[8];
     private final Color color;
-    private final float jumpingSpeed = 2;
+    private final float jumpingSpeed = 3;
     private int bulletCount = 0;
     private int damageCooldown = 0;
 
@@ -116,7 +116,13 @@ public class Player extends Character {
 
         if (keyPressed[5] && bulletCount > 30) {
             bulletCount = 0;
-            handler.addObject(new Bullet(x + 15, y + 30, ID.BULLET, direction));
+            handler.addObject(new Bullet(x + 15, y + 30, ID.BULLET, direction, 0));
+        }
+
+        if (keyPressed[6] && bulletCount > 30) {
+            System.out.println("WORKINGGGGG");
+            bulletCount = 0;
+            handler.addObject(new Bullet(x + 15, y + 30, ID.BULLET, direction, 1));
         }
     }
 

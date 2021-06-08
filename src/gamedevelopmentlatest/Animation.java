@@ -88,9 +88,9 @@ public class Animation {
                     list = player;
                     break;
                 case GROUND:
-                    begin = 1;
+                    begin = 0;
                     count = 0;
-                    row = 1;
+                    row = 6;
                     list = ground;
                     break;
                 case PLATFORM:
@@ -120,7 +120,7 @@ public class Animation {
                 case BULLET:
                     begin = 10;
                     count = 0;
-                    row = 3;
+                    row = 5;
                     list = bullet;
                     break;
                 default:

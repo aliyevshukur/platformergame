@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class Game extends Canvas implements Runnable {
 
-    public static final int WIDTH = 1152, HEIGHT = 546;
+    public static final int WIDTH = 1152, HEIGHT = 720;
     private Thread thread;
     private Handler handler;
     private Player player;
@@ -113,7 +113,7 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         
         BufferedImage background = ImageLoader.loadImage("\\res\\background.png", this);
-        g.drawImage(background, 0, 0, 384 * 3, 182 * 3, null);
+        g.drawImage(background, 0, 0, 384 * 3, 240 * 3, null);
         
 //        g.setColor(Color.PINK);
 //        g.fillRect(0, 0, WIDTH, HEIGHT);

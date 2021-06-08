@@ -16,13 +16,24 @@ public class Bullet extends GameObject {
 
     float speed = 5;
     private int playerDirection = GSpace.getPlayer().getDirection();
-    
-    public Bullet(int x, int y, ID id, int direction) {
+    private int yDirection;
+
+    public Bullet(int x, int y, ID id, int direction, int yDirection) {
         super(x, y, id);
+        this.yDirection = yDirection;
         velX = (direction == 1) ? -speed : speed;
-        velY = speed;
-        width = 21;
-        height = 10;
+        if (yDirection == 1) {
+            velY = speed;
+            velX = 0;
+        } else if (yDirection == 2) {
+            velY = -speed;
+            velX = 0;
+        } else if (yDirection == 0) {
+            velY = 0;
+        }
+        System.out.println("VELY" + velY + " " + velX);
+        width = 41;
+        height = 20;
 
     }
 
@@ -30,13 +41,16 @@ public class Bullet extends GameObject {
     public void tick() {
 
         x += Math.round(velX);
+        y += Math.round(velY);
 
     }
 
     @Override
     public void render(Graphics g) {
 
-        if (playerDirection == 1) {
+        if (yDirection == 1 || yDirection == 2) {
+            g.drawImage(Animation.bullet.get(4), x, y, width, height, null);
+        } else if (playerDirection == 1) {
             g.drawImage(Animation.bullet.get(0), x, y, width, height, null);
         } else {
             g.drawImage(Animation.bullet.get(2), x, y, width, height, null);
