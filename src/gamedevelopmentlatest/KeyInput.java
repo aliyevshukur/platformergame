@@ -42,7 +42,7 @@ public class KeyInput extends KeyAdapter {
         if (key == KeyEvent.VK_SPACE) {
             player.getKeyPressed()[0] = true;
         }
-                if (key == KeyEvent.VK_CONTROL) {
+        if (key == KeyEvent.VK_Q) {
             player.getKeyPressed()[5] = true;
         }
 
@@ -66,7 +66,7 @@ public class KeyInput extends KeyAdapter {
         if (key == KeyEvent.VK_SPACE) {
             player.getKeyPressed()[0] = false;
         }
-        if (key == KeyEvent.VK_CONTROL) {
+        if (key == KeyEvent.VK_Q) {
             player.getKeyPressed()[5] = false;
         }
     }

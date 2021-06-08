@@ -5,6 +5,7 @@
  */
 package gamedevelopmentlatest;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 /**
@@ -54,21 +55,25 @@ public abstract class Character extends GameObject {
                                 y = temp.getY() + temp.getBounds().height;
                                 velY *= -1.2;
                                 isJumping = false;
-                                onAir=false;
+                                onAir = false;
                             }
                         }
 
                         if (velX < 0) {
                             if (getBounds(boundsType.leftBounds).intersects(temp.getBounds())) {
-//                                x = temp.getX() - temp.getBounds().width;
-//                                velX = 0;
+                                x = temp.getX() + temp.getBounds().width - width;
+                                y = temp.getY() - height;
+
+                                velX = 0;
                             }
                         }
 
                         if (velX > 0) {
                             if (getBounds(boundsType.rightBounds).intersects(temp.getBounds())) {
-//                                x = temp.getX() - width;
-//                                velX = 0;
+                                x = temp.getX() + width;
+                                y = temp.getY() - height;
+
+                                velX = 0;
                             }
                         }
                     }
@@ -141,6 +146,15 @@ public abstract class Character extends GameObject {
 //                            velY += 1;
                         }
                     }
+                    break;
+                case BULLET: 
+                    if(id == ID.ENEMY && getBounds().intersects(temp.getBounds())) {
+                        System.out.println("WORKING");
+                      health -= 2;
+                      if(health <= 0) {
+                          alive =false;
+                      }
+                    }
 
             }
 
@@ -156,5 +170,9 @@ public abstract class Character extends GameObject {
     @Override
     public void render(Graphics g) {
 
+        g.setColor(Color.green);
+        g.fillRect(x - 3, y - 10, width * health / 100, 10);
+        g.setColor(Color.black);
+        g.drawRect(x - 3, y - 10, width, 10);
     }
 }

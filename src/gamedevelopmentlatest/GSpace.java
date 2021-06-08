@@ -19,7 +19,6 @@ public class GSpace {
     private static Player player;
     private static HUD hud;
     private static Camera camera;
-    private static Enemy enemy;
 
     public static Camera getCamera() {
         if (camera == null) {

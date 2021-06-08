@@ -19,6 +19,7 @@ public class Player extends Character {
     private final Color color;
     private int health;
     private final float jumpingSpeed = 2;
+    private int bulletCount = 0;
 
     public Player(int x, int y, ID id) {
         super(x, y, id);
@@ -70,6 +71,11 @@ public class Player extends Character {
         }
         x += Math.round(velX);
         y += Math.round(velY);
+
+        if (bulletCount < 35) {
+            bulletCount++;
+        }
+
         collision();
 
     }
@@ -102,20 +108,16 @@ public class Player extends Character {
             }
         }
 
-        if (keyPressed[6]) {
-            handler.addObject(new Bullet(x + 5, y + 5, ID.BULLET, direction));
+        if (keyPressed[5] && bulletCount > 30) {
+            bulletCount = 0;
+            handler.addObject(new Bullet(x + 15, y + 30, ID.BULLET, direction));
         }
     }
 
     @Override
     public void render(Graphics g) {
-
+        super.render(g);
         Animation.animateObject(g, this);
-//        g.drawImage(Animation.player.get(0), x, y, width, height, null);
-//        g.setColor(Color.green);
-//        g.fillRect(x, y, width, height);
-//        g.setColor(Color.green);
-//        g.fillRect(x - 20, y - 30, 2 * width * health / 100, 20);
 //
 //        g.setColor(Color.black);
 //        g.drawRect(x - 20, y - 30, 2 * width, 20);
@@ -144,4 +146,5 @@ public class Player extends Character {
     public void setKeyPressed(boolean[] keyPressed) {
         this.keyPressed = keyPressed;
     }
+    
 }

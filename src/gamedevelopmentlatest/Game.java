@@ -19,11 +19,10 @@ import java.util.logging.Logger;
  */
 public class Game extends Canvas implements Runnable {
 
-    public static final int WIDTH = 800, HEIGHT = 2 * WIDTH / 3;
+    public static final int WIDTH = 900, HEIGHT = 2 * WIDTH / 3;
     private Thread thread;
     private Handler handler;
     private Player player;
-    private Enemy enemy;
     private Camera camera;
     private HUD hud;
     boolean running = false;
@@ -41,7 +40,8 @@ public class Game extends Canvas implements Runnable {
         hud = GSpace.getHud();
 
         animation = new Animation();
-
+        
+        
         addKeyListener(new KeyInput());
         new Window(WIDTH, HEIGHT, "Game Development", this);
 
@@ -100,6 +100,7 @@ public class Game extends Canvas implements Runnable {
     private void tick() {
         handler.tick();
         camera.tick();
+        animation.tick();
     }
 
     private void render() {
@@ -127,9 +128,6 @@ public class Game extends Canvas implements Runnable {
 
     private void loadLevel() {
         ImageLoader.loadLevel(ImageLoader.loadImage("\\res\\world.png", this), handler, player);
-//        for (int i = 0; i < 100; i++) {
-//            handler.addObject(new Ground(300, i * 16, ID.GROUND));
-//        }
     }
 
 }

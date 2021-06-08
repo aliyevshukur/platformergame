@@ -24,6 +24,8 @@ public class Animation {
     static ArrayList<BufferedImage> surprizeBox;
     static ArrayList<BufferedImage> platform;
     static ArrayList<BufferedImage> enemy1;
+    static ArrayList<BufferedImage> bullet;
+
     private static BufferedImage spreadSheet;
 
     public Animation() {
@@ -33,6 +35,7 @@ public class Animation {
         surprizeBox = new ArrayList();
         platform = new ArrayList();
         enemy1 = new ArrayList();
+        bullet = new ArrayList();
 
         try {
             spreadSheet = ImageIO.read(getClass().getResource("res/tileset.png"));
@@ -62,6 +65,7 @@ public class Animation {
         loadSheet(ID.SURPRIZE_BOX, 16, 16);
         loadSheet(ID.WALL, 16, 16);
         loadSheet(ID.ENEMY, 16, 24);
+        loadSheet(ID.BULLET, 21, 10);
 
     }
 
@@ -113,6 +117,12 @@ public class Animation {
                     row = 15;
                     list = enemy1;
                     break;
+                case BULLET:
+                    begin = 10;
+                    count = 0;
+                    row = 3;
+                    list = bullet;
+                    break;
                 default:
                     list = new ArrayList();
                     break;
@@ -139,17 +149,41 @@ public class Animation {
         int index = 0;
 
         if (obj.alive) {
-            index = 5 - obj.getX() % 30 / 15;
-            g.drawImage(player.get(index + 1), obj.getX(), obj.getY(), obj.width, obj.height, null);
+            if (obj.onAir) {
+                if (obj.direction == 1) {
+                    g.drawImage(enemy1.get(2), obj.getX(), obj.getY(), obj.width, obj.height, null);
+                } else {
+                    g.drawImage(enemy1.get(13), obj.getX(), obj.getY(), obj.width, obj.height, null);
+                }
+            } else if (obj.direction == 1) {
+                if (obj.velX < -0.5) {
+                    index = 7 - obj.getX() % 80 / 10;
+                    g.drawImage(enemy1.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
+                } else {
+                    g.drawImage(enemy1.get(5), obj.getX(), obj.getY(), obj.width, obj.height, null);
+                }
+            } else if (obj.direction == 2) {
+                if (obj.velX > 0.5) {
+                    index = 15 - obj.getX() % 80 / 10;
+                    g.drawImage(enemy1.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
+                } else {
+                    g.drawImage(enemy1.get(10), obj.getX(), obj.getY(), obj.width, obj.height, null);
+                }
+            }
         } else {
-            g.drawImage(player.get(0), obj.getX(), obj.getY(), obj.width, obj.height, null);
+            index = 5 - animationClock % 20 / 10;
+            System.out.println("INDEX" + animationClock);
+            g.drawImage(enemy1.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
         }
+
+//      15 tile 0-7 left 8-15 right
     }
 
     public static void animatePlayer(Player obj, Graphics g) {
         int index = 0;
         // 0-18
         // left 0-8 right 9-17 jump 6 -8 down 9
+
         if (obj.onAir) {
             if (obj.direction == 1) {
                 g.drawImage(player.get(3), obj.getX(), obj.getY(), obj.width, obj.height, null);
@@ -161,13 +195,14 @@ public class Animation {
                 index = 8 - obj.getX() % 90 / 10;
                 g.drawImage(player.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
             } else {
-                g.drawImage(player.get(9), obj.getX(), obj.getY(), obj.width, obj.height, null);
+                g.drawImage(player.get(8), obj.getX(), obj.getY(), obj.width, obj.height, null);
             }
         } else if (obj.direction == 2) {
             if (obj.velX > 0.5) {
                 index = 17 - obj.getX() % 90 / 10;
                 g.drawImage(player.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
             } else {
+
                 g.drawImage(player.get(10), obj.getX(), obj.getY(), obj.width, obj.height, null);
             }
         }

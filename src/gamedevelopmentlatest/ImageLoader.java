@@ -40,14 +40,14 @@ public class ImageLoader {
                 int blue = pixel & 0x0ff;
 
                 if (red == 255 && green == 0 && blue == 0) {
-                    handler.addObject(new Platform(xx * 16 * size, yy * 4 * size, ID.PLATFORM, 48 * size, 8 * size));
+                    handler.addObject(new Platform(xx * 16, yy * 16, ID.PLATFORM, 48 * size, 8 * size));
                 } else if (red == 0 && green == 255 && blue == 0) {
-                    handler.addObject(new Ground(xx * 16 * size, yy * 8, ID.GROUND, 16 * size, 16 * size));
+                    handler.addObject(new Ground(xx * 16, yy * 16, ID.GROUND, 16 * size, 16 * size));
                 } else if (red == 255 && green == 255 && blue == 0) {
-                    handler.addObject(new Enemy(xx * 16 * size, yy * 4 * size, ID.ENEMY, 16 * size, 24 * size));
+                    handler.addObject(new Enemy(xx * 16, yy * 16, ID.ENEMY, 16 * size, 24 * size));
                 } else if (red == 0 && green == 0 && blue == 255) {
-                    player.setX(xx * size);
-                    player.setY(yy * size);
+                    player.setX(xx);
+                    player.setY(yy);
                     handler.addObject(player);
                 }
             }

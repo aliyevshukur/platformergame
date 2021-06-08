@@ -18,7 +18,7 @@ public class Enemy extends Character {
 
     public Enemy(int x, int y, ID id, int width, int height) {
         super(x, y, id);
-        speed = 0.1f;
+        speed = 0.6f;
         velX = speed;
         direction = 2;
         this.width = width;
@@ -27,25 +27,38 @@ public class Enemy extends Character {
 
     @Override
     public void tick() {
+
         if (!alive) {
             hitCount++;
+
             if (hitCount > 100) {
                 handler.removeObject(this);
-            } else {
-        if (onAir) {
-            velY += gravity;
-        }
+            }
 
-        if ((x - GSpace.getPlayer().getX() > 0) & direction == 2) {
-            direction = 1;
-            velX = -1 * speed;
-        } else if ((x - GSpace.getPlayer().getX() < 0) & direction == 1) {
-            direction = 2;
-            velX = 1 * speed;
-        }
+        } else {
+            if (onAir) {
+                velY += gravity;
+            } else {
+                if (velX >= 0) {
+                    velX -= friction;
+                } else {
+                    velX += friction;
+                }
+            }
+
+            if ((x - GSpace.getPlayer().getX()) > 0) {
+
+                direction = 1;
+                velX = -1 * speed;
+                x += Math.round(velX);
+            } else if ((x - GSpace.getPlayer().getX()) < 0) {
+                direction = 2;
+                velX = 1 * speed;
+                x += Math.round(velX);
             }
         }
 
+        y += Math.round(velY);
         collision();
     }
 
@@ -57,11 +70,10 @@ public class Enemy extends Character {
 
     @Override
     public void render(Graphics g) {
-//        if (alive) {
-        g.drawImage(Animation.enemy1.get(0), width, width, null);
-//        } else {
-//            g.drawImage(Animation.enemy1.get(0), width, width, null);
-//        }
+
+        super.render(g);
+
+        Animation.animateObject(g, this);
 
     }
 

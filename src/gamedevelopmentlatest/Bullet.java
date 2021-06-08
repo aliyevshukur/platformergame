@@ -15,29 +15,32 @@ import java.awt.Graphics;
 public class Bullet extends GameObject {
 
     float speed = 5;
-
+    private int playerDirection = GSpace.getPlayer().getDirection();
+    
     public Bullet(int x, int y, ID id, int direction) {
         super(x, y, id);
         velX = (direction == 1) ? -speed : speed;
-        velY = speed / 5;
-        width = 5;
-        height = 5;
+        velY = speed;
+        width = 21;
+        height = 10;
 
     }
 
     @Override
     public void tick() {
-        velY += speed / 300;
+
         x += Math.round(velX);
-        y += Math.round(velY);
 
     }
 
     @Override
     public void render(Graphics g) {
-//        g.setColor(Color.yellow);
-//        g.drawOval((int) x, (int) y, width, height);
-        g.drawImage(Animation.ground.get(0),  x,  y, width, height, null);
+
+        if (playerDirection == 1) {
+            g.drawImage(Animation.bullet.get(0), x, y, width, height, null);
+        } else {
+            g.drawImage(Animation.bullet.get(2), x, y, width, height, null);
+        }
     }
 
 }
