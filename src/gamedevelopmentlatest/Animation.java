@@ -142,7 +142,7 @@ public class Animation {
             animatePlayer((Player) obj, g);
         } else if (obj.getId() == ID.ENEMY) {
             animateObject(g, obj, 3);
-        }
+        } else  animateObject(g, obj, 12);
     }
 
     public static void animateObject(Graphics g, GameObject obj, int size) {

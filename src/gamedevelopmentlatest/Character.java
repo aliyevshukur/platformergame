@@ -153,11 +153,13 @@ public abstract class Character extends GameObject {
                     }
                     break;
                 case BULLET:
-                    if (id == ID.ENEMY && getBounds().intersects(temp.getBounds())) {
+                    if ((id == ID.ENEMY || id == ID.SPAWNER) && getBounds().intersects(temp.getBounds())) {
 
-                        health -= 15;
+                        health -= health >= 15 ? 15 : health;
+                        System.out.println("spawn health: " + health);
                         if (health <= 0) {
                             alive = false;
+                            // decreaseSpawnHealth();
                         }
 
                         handler.removeObject(temp);
