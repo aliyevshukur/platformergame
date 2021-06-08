@@ -35,8 +35,6 @@ public class Platform extends GameObject {
 
     @Override
     public void render(Graphics g) {
-//        g.setColor(color);
-//        g.fill3DRect( x,  y, width, height, true);
         g.drawImage(Animation.platform.get(0), x, y, width, height, null);
     }
 

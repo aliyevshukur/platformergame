@@ -160,19 +160,20 @@ public class Animation {
                     index = 7 - obj.getX() % 80 / 10;
                     g.drawImage(enemy1.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
                 } else {
-                    g.drawImage(enemy1.get(5), obj.getX(), obj.getY(), obj.width, obj.height, null);
+                    index = 5 - animationClock % 20 / 10;
+                    g.drawImage(enemy1.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
                 }
             } else if (obj.direction == 2) {
                 if (obj.velX > 0.5) {
                     index = 15 - obj.getX() % 80 / 10;
                     g.drawImage(enemy1.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
                 } else {
-                    g.drawImage(enemy1.get(10), obj.getX(), obj.getY(), obj.width, obj.height, null);
+                    index = 5 - animationClock % 20 / 10;
+                    g.drawImage(enemy1.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
                 }
             }
         } else {
             index = 5 - animationClock % 20 / 10;
-            System.out.println("INDEX" + animationClock);
             g.drawImage(enemy1.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
         }
 

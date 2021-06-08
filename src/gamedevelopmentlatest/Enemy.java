@@ -46,15 +46,17 @@ public class Enemy extends Character {
                 }
             }
 
-            if ((x - GSpace.getPlayer().getX()) > 0) {
+            if (Math.abs(x - GSpace.getPlayer().getX()) > 24) {
+                if ((x - GSpace.getPlayer().getX()) > 0) {
 
-                direction = 1;
-                velX = -1 * speed;
-                x += Math.round(velX);
-            } else if ((x - GSpace.getPlayer().getX()) < 0) {
-                direction = 2;
-                velX = 1 * speed;
-                x += Math.round(velX);
+                    direction = 1;
+                    velX = -1 * speed;
+                    x += Math.round(velX);
+                } else if ((x - GSpace.getPlayer().getX()) < 0) {
+                    direction = 2;
+                    velX = 1 * speed;
+                    x += Math.round(velX);
+                }
             }
         }
 

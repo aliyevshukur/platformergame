@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class Game extends Canvas implements Runnable {
 
-    public static final int WIDTH = 900, HEIGHT = 2 * WIDTH / 3;
+    public static final int WIDTH = 1152, HEIGHT = 546;
     private Thread thread;
     private Handler handler;
     private Player player;
@@ -110,8 +111,12 @@ public class Game extends Canvas implements Runnable {
             return;
         }
         Graphics g = bs.getDrawGraphics();
-        g.setColor(Color.PINK);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
+        
+        BufferedImage background = ImageLoader.loadImage("\\res\\background.png", this);
+        g.drawImage(background, 0, 0, 384 * 3, 182 * 3, null);
+        
+//        g.setColor(Color.PINK);
+//        g.fillRect(0, 0, WIDTH, HEIGHT);
 
         Graphics2D g2d = (Graphics2D) g;
 

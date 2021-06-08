@@ -17,9 +17,9 @@ public class Player extends Character {
 
     private boolean[] keyPressed = new boolean[7];
     private final Color color;
-    private int health;
     private final float jumpingSpeed = 2;
     private int bulletCount = 0;
+    private int damageCooldown = 0;
 
     public Player(int x, int y, ID id) {
         super(x, y, id);
@@ -76,6 +76,10 @@ public class Player extends Character {
             bulletCount++;
         }
 
+        if (damageCooldown < 40) {
+            damageCooldown++;
+        }
+
         collision();
 
     }
@@ -84,7 +88,7 @@ public class Player extends Character {
 
         if (!isJumping) {
 
-            if (velX < 3) {
+            if (Math.abs(velX) < 3) {
                 if (keyPressed[1]) {
                     velX += -speed;
                 }
@@ -100,11 +104,13 @@ public class Player extends Character {
                 }
             }
         } else {
-            if (keyPressed[1]) {
-                velX += -speed / 5;
-            }
-            if (keyPressed[2]) {
-                velX += speed / 5;
+            if (Math.abs(velX) < 3) {
+                if (keyPressed[1]) {
+                    velX += -speed / 5;
+                }
+                if (keyPressed[2]) {
+                    velX += speed / 5;
+                }
             }
         }
 
@@ -121,6 +127,18 @@ public class Player extends Character {
 //
 //        g.setColor(Color.black);
 //        g.drawRect(x - 20, y - 30, 2 * width, 20);
+    }
+
+    public void damagePlayer(int point) {
+
+        if (damageCooldown >= 40) {
+            health -= point;
+            damageCooldown = 0;
+        }
+        System.out.println("Health" + health);
+        if (health <= 0) {
+            handler.removeObject(this);
+        }
     }
 
     public int getPoint() {
@@ -146,5 +164,5 @@ public class Player extends Character {
     public void setKeyPressed(boolean[] keyPressed) {
         this.keyPressed = keyPressed;
     }
-    
+
 }
