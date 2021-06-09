@@ -61,23 +61,27 @@ public abstract class Character extends GameObject {
 
                         if (velX < 0) {
                             if (getBounds(boundsType.leftBounds).intersects(temp.getBounds())) {
-                                System.out.println("X " + x + "Player x " + GSpace.getPlayer().getX());
 
-                                x = temp.getX() + width;
-                                velY = -2;
-
-                                velX = 0;
-                                isJumping = false;
-                                onAir = false;
+                                if (id == ID.ROCK_THROWER_ENEMY) {
+                                    direction = direction == 1 ? 2 : 1;
+                                } else {
+                                    velY = -2;
+                                    x = temp.getX() + width;
+                                    velX = 0;
+                                }
                             }
                         }
 
                         if (velX > 0) {
                             if (getBounds(boundsType.rightBounds).intersects(temp.getBounds())) {
-                                x = temp.getX() - width;
-                                velY = -2;
-//
-                                velX = 0;
+
+                                if (id == ID.ROCK_THROWER_ENEMY) {
+                                    direction = direction == 1 ? 2 : 1;
+                                } else {
+                                    velY = -2;
+                                    x = temp.getX() - width - 5;
+                                    velX = 0;
+                                }
                                 isJumping = false;
                                 onAir = false;
                             }
@@ -168,24 +172,32 @@ public abstract class Character extends GameObject {
                     if (getBounds().intersects(temp.getBounds())) {
 
                         if (getBounds(boundsType.downBounds).intersects(temp.getBounds())) {
-                            floating = false;
-                            if (!onAir) {
-                                isJumping = false;
-                            }
-                            
-                            velY = 0;
-                            y = temp.getY() - height;
+//                            floating = false;
+//                            if (!onAir) {
+//                                isJumping = false;
+//                            }
+//
+//                            velY = 0;
+//                            y = temp.getY() - height;
 
                         } else if (getBounds(boundsType.leftBounds).intersects(temp.getBounds())) {
-                                                        System.out.println("DOWN RIGHT");
+//                            System.out.println("VEL BEFORE" + velX);
+//                            float speed = velX;
 
-                            velX = 0;
-                            x = temp.getX() + temp.getBounds().width;
+//                            velX = -speed;
+//                            x = temp.getX() + temp.getBounds().width;
+                            if (id == ID.ROCK_THROWER_ENEMY) {
+                                direction = direction == 1 ? 2 : 1;
+                            }
                         } else if (getBounds(boundsType.rightBounds).intersects(temp.getBounds())) {
-                                                        System.out.println("DOWN LEFT");
+//                            System.out.println("VEL BEFORE" + velX);
+//                            float speed = velX;
+//                            velX = -speed;
 
-                            velX = 0;
-                            x = temp.getX();
+//                            x = temp.getX();
+                            if (id == ID.ROCK_THROWER_ENEMY) {
+                                direction = direction == 1 ? 2 : 1;
+                            }
                         }
 
                         break;

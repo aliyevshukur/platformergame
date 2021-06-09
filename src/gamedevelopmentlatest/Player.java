@@ -129,8 +129,8 @@ public class Player extends Character {
     @Override
     public void render(Graphics g) {
         super.render(g);
-        Animation.animateObject(g, this);
-//
+        Animation.animateCharacter(g, this);
+
 //        g.setColor(Color.black);
 //        g.drawRect(x - 20, y - 30, 2 * width, 20);
     }

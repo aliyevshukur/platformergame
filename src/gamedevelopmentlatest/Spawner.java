@@ -29,6 +29,7 @@ public class Spawner extends Character {
         this.width = width;
         this.height = height;
         tickCounter = 0;
+        onAir = false;
     }
 
     @Override
@@ -98,7 +99,7 @@ public class Spawner extends Character {
 
         super.render(g);
 
-        Animation.animateObject(g, this);
+        Animation.animateCharacter(g, this);
 
     }
 

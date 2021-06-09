@@ -22,7 +22,7 @@ public abstract class GameObject implements Serializable {
     protected int width = 16 * GSpace.multSize;
     protected boolean hasGravity = true;
     protected boolean onAir = true;
-    protected int direction = 1;
+    protected int direction = 2;
     protected final int stateX;
     protected final int stateY;
 

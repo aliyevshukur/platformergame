@@ -1,33 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gamedevelopmentlatest;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 
-/**
- *
- * @author Shukur
- */
-public class Enemy extends Character {
+public class RockThrowerEnemy extends Character {
 
     public int hitCount = 0;
+    public int throwCooldown = 100;
 
-    public Enemy(int x, int y, ID id, int width, int height) {
+    public RockThrowerEnemy(int x, int y, ID id, int width, int height) {
         super(x, y, id);
         speed = 0.6f;
         velX = speed;
-        direction = 2;
         this.width = width;
         this.height = height;
     }
 
     @Override
     public void tick() {
-
         if (!alive) {
             hitCount++;
 
@@ -36,6 +25,11 @@ public class Enemy extends Character {
             }
 
         } else {
+
+            if (throwCooldown < 200) {
+                throwCooldown++;
+            }
+
             if (onAir) {
                 velY += gravity;
             } else {
@@ -46,28 +40,44 @@ public class Enemy extends Character {
                 }
             }
 
-            if (Math.abs(x - GSpace.getPlayer().getX()) > 24) {
-                if ((x - GSpace.getPlayer().getX()) > 0) {
+            if (Math.abs(x - GSpace.getPlayer().getX()) > 300) {
+                velX = speed;
 
-                    direction = 1;
+                if (direction == 1) {
                     velX = -1 * speed;
-                    x += Math.round(velX);
-                } else if ((x - GSpace.getPlayer().getX()) < 0) {
+                } else if (direction == 2) {
+                    velX = speed;
+                }
+
+                x += Math.round(velX);
+            } else {
+                if (GSpace.getPlayer().getX() - x > 0) {
                     direction = 2;
-                    velX = 1 * speed;
-                    x += Math.round(velX);
+                } else {
+                    direction = 1;
+                }
+
+                if(throwCooldown >= 200){
+                    throwRock();
+                    throwCooldown = 0;
                 }
             }
+
         }
 
         y += Math.round(velY);
+
         collision();
+//    }
     }
 
     public void hit(GameObject obj) {
         // spesific behaviour of enemy when it hist the player
         alive = false;
-        System.out.println("Eshedu en la liahe illelah");
+    }
+
+    public void throwRock() {
+        handler.addObject(new EnemyThrowItem(x, y + 20, ID.ENEMY_THROW_ITEM, direction, 16 * GSpace.multSize, 16 * GSpace.multSize));
     }
 
     @Override
@@ -76,6 +86,8 @@ public class Enemy extends Character {
         super.render(g);
 
         Animation.animateCharacter(g, this);
+//        g.setColor(Color.black);
+//        g.drawRect(x, y, width, height);
 
     }
 

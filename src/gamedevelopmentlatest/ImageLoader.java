@@ -53,10 +53,15 @@ public class ImageLoader {
                 } else if (red == 255 && green == 255 && blue == 0) {
                     handler.addObject(new Enemy(xx * 16, yy * 16, ID.ENEMY, 16 * size, 24 * size));
                 } else if (red == 255 && green == 124 && blue == 53) {
-                    handler.addObject(new Spawner(xx * 16, yy * 16, ID.SPAWNER, 20 * size, 25 * size));
+                    handler.addObject(new Spawner(xx * 32, yy * 28, ID.SPAWNER, 26 * size, 32 * size));
                 } else if (red == 255 && green == 200 && blue == 200) {
                     handler.addObject(new Wall(xx * 32, yy * 32, ID.WALL, 16 * size, 16 * size));
-                }else if (red == 0 && green == 0 && blue == 255) {
+                } else if (red == 0 && green == 0 && blue == 255) {
+
+                } else if (red == 140 && green == 165 && blue == 255) {
+                    handler.addObject(new RockThrowerEnemy(xx * 16, yy * 16, ID.ROCK_THROWER_ENEMY, 20 * size, 32 * size));
+                } else if (red == 0 && green == 0 && blue == 255) {
+
                     player.setX(xx);
                     player.setY(yy);
                     handler.addObject(player);

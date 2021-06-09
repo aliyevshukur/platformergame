@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 /**
- *
  * @author Shukur
  */
 public class Animation {
@@ -25,6 +24,9 @@ public class Animation {
     static ArrayList<BufferedImage> platform;
     static ArrayList<BufferedImage> enemy1;
     static ArrayList<BufferedImage> bullet;
+    static ArrayList<BufferedImage> rockThrower;
+    static ArrayList<BufferedImage> spawner;
+    static ArrayList<BufferedImage> enemyThrowItem;
 
     private static BufferedImage spreadSheet;
 
@@ -36,6 +38,9 @@ public class Animation {
         platform = new ArrayList();
         enemy1 = new ArrayList();
         bullet = new ArrayList();
+        rockThrower = new ArrayList();
+        spawner = new ArrayList();
+        enemyThrowItem = new ArrayList();
 
         try {
             spreadSheet = ImageIO.read(getClass().getResource("res/tileset.png"));
@@ -66,6 +71,9 @@ public class Animation {
         loadSheet(ID.WALL, 16, 16);
         loadSheet(ID.ENEMY, 16, 24);
         loadSheet(ID.BULLET, 21, 10);
+        loadSheet(ID.ROCK_THROWER_ENEMY, 20, 32);
+        loadSheet(ID.SPAWNER, 24, 32);
+        loadSheet(ID.ENEMY_THROW_ITEM, 16, 16);
 
     }
 
@@ -99,12 +107,6 @@ public class Animation {
                     row = 0;
                     list = platform;
                     break;
-//                case SURPRIZE_BOX:
-//                    begin = 9;
-//                    count = 0;
-//                    row = 0;
-//                    list = surprizeBox;
-//                    break;
                 case WALL:
                     begin = 14;
                     count = 1;
@@ -123,89 +125,152 @@ public class Animation {
                     row = 5;
                     list = bullet;
                     break;
+                case ROCK_THROWER_ENEMY:
+                    begin = 0;
+                    count = 28;
+                    row = 9;
+                    list = rockThrower;
+                    break;
+                case SPAWNER:
+                    begin = 5;
+                    count = 1;
+                    row = 3;
+                    list = spawner;
+                    break;
+                case ENEMY_THROW_ITEM:
+                    begin = 10;
+                    count = 3;
+                    row = 8;
+                    list = enemyThrowItem;
+                    break;
                 default:
                     list = new ArrayList();
                     break;
             }
 
         }
+        int step = 16;
+        if (id == ID.SPAWNER || id == ID.ROCK_THROWER_ENEMY) {
+            step = 32;
+        }
         for (int i = begin; i <= (row + begin); ++i) {
-            list.add(spreadSheet.getSubimage(16 * i, 16 * count, bitWidth, bitHeight));
+            list.add(spreadSheet.getSubimage(step * i, 16 * count, bitWidth, bitHeight));
         }
 
-        System.out.println("Animation" + list.toString());
         return list;
     }
 
     public static void animateObject(Graphics g, GameObject obj) {
-        if (obj.getId() == ID.PLAYER) {
-            animatePlayer((Player) obj, g);
-        } else if (obj.getId() == ID.ENEMY) {
-            animateObject(g, obj, 3);
-        } else  animateObject(g, obj, 12);
+        int index = 0;
+
+        int leftEnd = 0;
+        int rightEnd = 0;
+
+        ArrayList<BufferedImage> array = new ArrayList<>();
+
+        if (null != obj.getId()) {
+            switch (obj.getId()) {
+                case ENEMY_THROW_ITEM:
+                    leftEnd = 3;
+                    rightEnd = 7;
+                    array = enemyThrowItem;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (obj.direction == 1) {
+            index = leftEnd - obj.getX() % ((leftEnd + 1) * 10) / 10;
+            g.drawImage(array.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
+        } else if (obj.direction == 2) {
+            index = rightEnd - obj.getX() % ((leftEnd + 1) * 10) / 10;
+            g.drawImage(array.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
+
+        }
+
     }
 
-    public static void animateObject(Graphics g, GameObject obj, int size) {
+    public static void animateCharacter(Graphics g, Character obj) {
         int index = 0;
+
+        int leftEnd = 0;
+        int rightEnd = 0;
+        int jumpLeft = 0;
+        int jumpRight = 0;
+        int idle = 1;
+        ArrayList<BufferedImage> array = new ArrayList<>();
+
+        if (null != obj.getId()) {
+            switch (obj.getId()) {
+                case PLAYER:
+                    leftEnd = 8;
+                    rightEnd = 17;
+                    jumpLeft = 2;
+                    jumpRight = 13;
+                    idle = 10;
+                    array = player;
+                    break;
+                case ENEMY:
+                    leftEnd = 7;
+                    rightEnd = 15;
+                    jumpLeft = 3;
+                    jumpRight = 14;
+                    idle = 5;
+                    array = enemy1;
+                    break;
+                case ROCK_THROWER_ENEMY:
+                    leftEnd = 4;
+                    rightEnd = 9;
+                    jumpRight = 7;
+                    jumpLeft = 2;
+                    idle = obj.direction == 1 ? 4 : 6;
+                    array = rockThrower;
+                    break;
+                case SPAWNER:
+                    leftEnd = 1;
+                    rightEnd = 0;
+                    jumpRight = 0;
+                    idle = 1;
+                    jumpLeft = 7;
+                    array = spawner;
+                    break;
+                case ENEMY_THROW_ITEM:
+                    leftEnd = 3;
+                    rightEnd = 3;
+                    jumpRight = 0;
+                    idle = 0;
+                    jumpLeft = 0;
+                    array = enemyThrowItem;
+                    break;
+                default:
+                    break;
+            }
+        }
 
         if (obj.alive) {
             if (obj.onAir) {
                 if (obj.direction == 1) {
-                    g.drawImage(enemy1.get(2), obj.getX(), obj.getY(), obj.width, obj.height, null);
+                    g.drawImage(array.get(jumpLeft), obj.getX(), obj.getY(), obj.width, obj.height, null);
                 } else {
-                    g.drawImage(enemy1.get(13), obj.getX(), obj.getY(), obj.width, obj.height, null);
+                    g.drawImage(array.get(jumpRight), obj.getX(), obj.getY(), obj.width, obj.height, null);
                 }
             } else if (obj.direction == 1) {
-                if (obj.velX < -0.5) {
-                    index = 7 - obj.getX() % 80 / 10;
-                    g.drawImage(enemy1.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
-                } else {
-                    index = 5 - animationClock % 20 / 10;
-                    g.drawImage(enemy1.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
-                }
+
+                index = obj.velX < -0.5 ? leftEnd - obj.getX() % ((leftEnd + 1) * 10) / 10 : idle - animationClock % 20 / 10;
+
+                g.drawImage(array.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
+
             } else if (obj.direction == 2) {
-                if (obj.velX > 0.5) {
-                    index = 15 - obj.getX() % 80 / 10;
-                    g.drawImage(enemy1.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
-                } else {
-                    index = 5 - animationClock % 20 / 10;
-                    g.drawImage(enemy1.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
-                }
+
+                index = obj.velX > 0.5 ? rightEnd - obj.getX() % ((leftEnd + 1) * 10) / 10 : idle - animationClock % 20 / 10;
+
+                g.drawImage(array.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
+
             }
         } else {
-            index = 5 - animationClock % 20 / 10;
-            g.drawImage(enemy1.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
-        }
-
-//      15 tile 0-7 left 8-15 right
-    }
-
-    public static void animatePlayer(Player obj, Graphics g) {
-        int index = 0;
-        // 0-18
-        // left 0-8 right 9-17 jump 6 -8 down 9
-
-        if (obj.onAir) {
-            if (obj.direction == 1) {
-                g.drawImage(player.get(3), obj.getX(), obj.getY(), obj.width, obj.height, null);
-            } else {
-                g.drawImage(player.get(14), obj.getX(), obj.getY(), obj.width, obj.height, null);
-            }
-        } else if (obj.direction == 1) {
-            if (obj.velX < -0.5) {
-                index = 8 - obj.getX() % 90 / 10;
-                g.drawImage(player.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
-            } else {
-                g.drawImage(player.get(8), obj.getX(), obj.getY(), obj.width, obj.height, null);
-            }
-        } else if (obj.direction == 2) {
-            if (obj.velX > 0.5) {
-                index = 17 - obj.getX() % 90 / 10;
-                g.drawImage(player.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
-            } else {
-
-                g.drawImage(player.get(10), obj.getX(), obj.getY(), obj.width, obj.height, null);
-            }
+            index = idle - animationClock % 20 / 10;
+            g.drawImage(array.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
         }
     }
 
