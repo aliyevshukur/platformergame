@@ -61,11 +61,12 @@ public abstract class Character extends GameObject {
 
                         if (velX < 0) {
                             if (getBounds(boundsType.leftBounds).intersects(temp.getBounds())) {
-                                x = temp.getX();
-//                                y = temp.getY() - height;
-//
+                                System.out.println("X " + x + "Player x " + GSpace.getPlayer().getX());
+
+                                x = temp.getX() + width;
+                                velY = -2;
+
                                 velX = 0;
-//                                velY = 2;
                                 isJumping = false;
                                 onAir = false;
                             }
@@ -73,11 +74,10 @@ public abstract class Character extends GameObject {
 
                         if (velX > 0) {
                             if (getBounds(boundsType.rightBounds).intersects(temp.getBounds())) {
-                                x = temp.getX() + width;
-//                                y = temp.getY() - height;
+                                x = temp.getX() - width;
+                                velY = -2;
 //
                                 velX = 0;
-//                                velY = 2;
                                 isJumping = false;
                                 onAir = false;
                             }
@@ -156,7 +156,6 @@ public abstract class Character extends GameObject {
                     if ((id == ID.ENEMY || id == ID.SPAWNER) && getBounds().intersects(temp.getBounds())) {
 
                         health -= health >= 15 ? 15 : health;
-                        System.out.println("spawn health: " + health);
                         if (health <= 0) {
                             alive = false;
                             // decreaseSpawnHealth();
@@ -164,7 +163,34 @@ public abstract class Character extends GameObject {
 
                         handler.removeObject(temp);
                     }
+                    break;
+                case WALL:
+                    if (getBounds().intersects(temp.getBounds())) {
 
+                        if (getBounds(boundsType.downBounds).intersects(temp.getBounds())) {
+                            floating = false;
+                            if (!onAir) {
+                                isJumping = false;
+                            }
+                            
+                            velY = 0;
+                            y = temp.getY() - height;
+
+                        } else if (getBounds(boundsType.leftBounds).intersects(temp.getBounds())) {
+                                                        System.out.println("DOWN RIGHT");
+
+                            velX = 0;
+                            x = temp.getX() + temp.getBounds().width;
+                        } else if (getBounds(boundsType.rightBounds).intersects(temp.getBounds())) {
+                                                        System.out.println("DOWN LEFT");
+
+                            velX = 0;
+                            x = temp.getX();
+                        }
+
+                        break;
+
+                    }
             }
 
         }
@@ -177,7 +203,8 @@ public abstract class Character extends GameObject {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics g
+    ) {
         Color healthColor = Color.green;
         if (id == ID.ENEMY) {
             healthColor = Color.red;

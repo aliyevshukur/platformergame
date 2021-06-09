@@ -105,12 +105,12 @@ public class Animation {
 //                    row = 0;
 //                    list = surprizeBox;
 //                    break;
-//                case WALL:
-//                    begin = 8;
-//                    count = 1;
-//                    row = 4;
-//                    list = wall;
-//                    break;
+                case WALL:
+                    begin = 14;
+                    count = 1;
+                    row = 1;
+                    list = wall;
+                    break;
                 case ENEMY:
                     begin = 0;
                     count = 26;
@@ -189,7 +189,7 @@ public class Animation {
             if (obj.direction == 1) {
                 g.drawImage(player.get(3), obj.getX(), obj.getY(), obj.width, obj.height, null);
             } else {
-                g.drawImage(player.get(13), obj.getX(), obj.getY(), obj.width, obj.height, null);
+                g.drawImage(player.get(14), obj.getX(), obj.getY(), obj.width, obj.height, null);
             }
         } else if (obj.direction == 1) {
             if (obj.velX < -0.5) {

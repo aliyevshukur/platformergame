@@ -17,7 +17,7 @@ public class Player extends Character {
 
     private boolean[] keyPressed = new boolean[8];
     private final Color color;
-    private final float jumpingSpeed = 3;
+    private final float jumpingSpeed = 2;
     private int bulletCount = 0;
     private int damageCooldown = 0;
 
@@ -106,10 +106,10 @@ public class Player extends Character {
         } else {
             if (Math.abs(velX) < 3) {
                 if (keyPressed[1]) {
-                    velX += -speed / 5;
+                    velX += -speed / 7;
                 }
                 if (keyPressed[2]) {
-                    velX += speed / 5;
+                    velX += speed / 7;
                 }
             }
         }
