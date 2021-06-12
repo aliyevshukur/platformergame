@@ -5,6 +5,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 // creating new thread for every sound because when i tried to just play sound in main thread
 // i had laggy sound and sometimes and delayed a lot so.....
+
 public class Sound implements Runnable {
 
     public static int WAITING_TIME = 0;
@@ -38,17 +39,12 @@ public class Sound implements Runnable {
     }
 
     public static Clip getSound(String path) {
-        File file = new File(path);
+//        File file = new File(path);
         Clip clip = null;
         try {
             clip = AudioSystem.getClip();
             // same situation why i have ClassLoader here
-            if (file.exists()) {
-                clip.open(AudioSystem.getAudioInputStream(file));
-            } else {
-                path = path.substring(path.indexOf("/") + 1);
-                clip.open(AudioSystem.getAudioInputStream(ClassLoader.getSystemClassLoader().getResource(path)));
-            }
+            clip.open(AudioSystem.getAudioInputStream(Sound.class.getResource(path)));
         } catch (Exception e) {
             e.printStackTrace();
         }

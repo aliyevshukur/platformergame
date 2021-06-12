@@ -84,6 +84,7 @@ public class Player extends Character {
         }
 
         collision();
+
     }
 
     private void keyInput() {
