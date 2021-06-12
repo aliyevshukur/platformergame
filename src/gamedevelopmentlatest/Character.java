@@ -34,6 +34,7 @@ public abstract class Character extends GameObject {
             GameObject temp = handler.getObjects().get(i);
 
             switch (temp.getId()) {
+
                 case GROUND:
                     if (getBounds(BoundType.UNDER_BOUND).intersects(temp.getBounds())) {
                         onAirTemp = false;
@@ -79,13 +80,23 @@ public abstract class Character extends GameObject {
                     break;
 
                 case BULLET:
-                    if ((id == ID.ENEMY || id == ID.SPAWNER) && getBounds().intersects(temp.getBounds())) {
-                        health -= health >= 15 ? 15 : health;
-                        if (health <= 0) {
-                            alive = false;
-                            // decreaseSpawnHealth();
+
+                    if (getBounds().intersects(temp.getBounds())) {
+                        if ((id == ID.ENEMY || id == ID.ROCK_THROWER_ENEMY)) {
+                            health -= health >= 15 ? 15 : health;
+                            if (health <= 0) {
+                                alive = false;
+                            }
+                            handler.removeObject(temp);
+
+                        } else if ((id == ID.SPAWNER || id == ID.SPAWNER2)) {
+                            health -= health >= 5 ? 5 : health;
+                            if (health <= 0) {
+                                alive = false;
+                            }
+                            handler.removeObject(temp);
+
                         }
-                        handler.removeObject(temp);
                     }
                     break;
 
@@ -159,17 +170,7 @@ public abstract class Character extends GameObject {
 //                    }
 //
                     if (getBounds().intersects(temp.getBounds())) {
-//                        if (getBounds(BoundType.DOWN_BOUND).intersects(temp.getBounds(BoundType.UP_SURFACE))) {
-//                            GSpace.getPlayer().setClimbing(false);
-//                            y = temp.getY() - height;
-                        y -= 30;
-                        onAir = true;
-                        onAirTemp = true;
-                        isJumping = true;
-//                        } else {
-//                        GSpace.getPlayer().setClimbing(true);
-
-//                        }
+                        velY -= 5;
                     }
 
                     break;
@@ -235,7 +236,7 @@ public abstract class Character extends GameObject {
     public void render(Graphics g
     ) {
         Color healthColor = Color.green;
-        if (id == ID.ENEMY) {
+        if (id == ID.ENEMY || id == ID.ROCK_THROWER_ENEMY || id == ID.SPAWNER || id == ID.SPAWNER2) {
             healthColor = Color.red;
         }
         g.setColor(healthColor);

@@ -25,7 +25,9 @@ public class Trambolin extends GameObject {
 
     @Override
     public void render(Graphics g) {
+
         g.drawImage(Animation.trambolin.get(0), x, y, width, height, null);
+
     }
 
 }

@@ -5,7 +5,6 @@
  */
 package gamedevelopmentlatest;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 /**
@@ -18,6 +17,7 @@ public class Enemy extends Character {
 
     public Enemy(int x, int y, ID id, int width, int height) {
         super(x, y, id);
+
         speed = 0.6f;
         velX = speed;
         direction = Direction.RIGHT;
@@ -60,12 +60,6 @@ public class Enemy extends Character {
 
         y += Math.round(velY);
         collision();
-    }
-
-    public void hit(GameObject obj) {
-        // spesific behaviour of enemy when it hist the player
-        alive = false;
-        System.out.println("Eshedu en la liahe illelah");
     }
 
     @Override

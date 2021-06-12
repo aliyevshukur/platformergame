@@ -20,7 +20,6 @@ public class HUD {
     }
 
     public void render(Graphics g) {
-    
 
     }
 }

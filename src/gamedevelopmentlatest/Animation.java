@@ -90,7 +90,7 @@ public class Animation {
         loadSheet(ID.SPAWNER2, 24, 32);
         loadSheet(ID.ENEMY_THROW_ITEM, 16, 16);
         loadSheet(ID.DECORATION, 112, 112);
-        loadSheet(ID.TRAMBOLIN, 48, 16);
+        loadSheet(ID.TRAMBOLIN, 48, 32);
     }
 
     private ArrayList<BufferedImage> loadSheet(ID id, int bitWidth, int bitHeight) {
@@ -255,7 +255,11 @@ public class Animation {
                     rightEnd = 17;
                     jumpLeft = 2;
                     jumpRight = 13;
-                    idle = 10;
+                    if (obj.direction == Direction.RIGHT) {
+                        idle = 10;
+                    } else if (obj.direction == Direction.LEFT) {
+                        idle = 8;
+                    }
                     array = player;
                     break;
                 case ENEMY:

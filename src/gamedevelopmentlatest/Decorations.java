@@ -5,14 +5,14 @@
  */
 package gamedevelopmentlatest;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 /**
  *
  * @author dejavu
  */
-public class Decorations extends GameObject{
+public class Decorations extends GameObject {
+
     private int index = 0;
 
     public Decorations(int x, int y, ID id, int width, int height, int index) {
@@ -24,11 +24,11 @@ public class Decorations extends GameObject{
 
     @Override
     public void tick() {
- }
+    }
 
     @Override
     public void render(Graphics g) {
         g.drawImage(Animation.decorations.get(index), x, y, width, height, null);
- }
-    
+    }
+
 }

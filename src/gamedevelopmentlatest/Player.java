@@ -100,8 +100,6 @@ public class Player extends Character {
                 }
 
                 if (keyPressed[3]) {
-                    System.out.println("CLIMB " + climbing);
-
                     if (climbing) {
                         y -= 6;
                     }
@@ -128,12 +126,12 @@ public class Player extends Character {
 
         if (keyPressed[5] && bulletCount > 30) {
             bulletCount = 0;
-            handler.addObject(new Bullet(x + 15, y + 30, ID.BULLET, direction, Direction.NONE));
+            handler.addObject(new Bullet(x + 15, y + 25, ID.BULLET, direction, Direction.NONE));
         }
 
         if (keyPressed[6] && bulletCount > 30) {
             bulletCount = 0;
-            handler.addObject(new Bullet(x + 15, y + 30, ID.BULLET, direction, Direction.DOWN));
+            handler.addObject(new Bullet(x + 15, y + 25, ID.BULLET, direction, Direction.DOWN));
         }
     }
 
