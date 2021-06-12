@@ -20,6 +20,7 @@ public class Player extends Character {
     private final float jumpingSpeed = 2;
     private int bulletCount = 0;
     private int damageCooldown = 0;
+    private Sound jumpingSound;
 
     public Player(int x, int y, ID id) {
         super(x, y, id);
@@ -38,6 +39,8 @@ public class Player extends Character {
         keyPressed[4] = false;
         keyPressed[5] = false;
         keyPressed[6] = false; // shoot
+        this.jumpingSound = new Sound("C:\\Users\\Ziya\\Downloads\\platformergame-main\\src\\gamedevelopmentlatest\\res\\jump.wav");
+        jumpingSound.startThread();
 
     }
 
@@ -105,6 +108,7 @@ public class Player extends Character {
                     if (!isJumping) {
                         velY -= jumpingSpeed;
                         isJumping = true;
+                        jumpingSound.play();
                     }
                 }
             }

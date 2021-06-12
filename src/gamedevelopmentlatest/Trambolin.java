@@ -13,7 +13,6 @@ import java.awt.Graphics;
  */
 public class Trambolin extends GameObject {
 
-
     public Trambolin(int x, int y, ID id, int width, int height) {
         super(x, y, id);
         this.width = width;

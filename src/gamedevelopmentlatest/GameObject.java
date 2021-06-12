@@ -36,7 +36,6 @@ public abstract class GameObject implements Serializable {
         this.id = id;
         this.stateX = x;
         this.stateY = y;
-
     }
 
     public int getX() {

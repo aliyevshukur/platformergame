@@ -12,9 +12,11 @@ import java.awt.Graphics;
  * @author Shukur
  */
 public class Bullet extends GameObject {
+
     float speed = 5;
     private Direction playerDirection = GSpace.getPlayer().getDirection();
     private Direction yDirection;
+    private Sound bulletSound;
 
     public Bullet(int x, int y, ID id, Direction direction, Direction yDirection) {
         super(x, y, id);
@@ -31,7 +33,9 @@ public class Bullet extends GameObject {
         }
         width = 41;
         height = 20;
-
+        bulletSound = new Sound("C:\\Users\\Ziya\\Downloads\\platformergame-main\\src\\gamedevelopmentlatest\\res\\sword.wav");
+        bulletSound.startThread();
+        bulletSound.play();
     }
 
     @Override

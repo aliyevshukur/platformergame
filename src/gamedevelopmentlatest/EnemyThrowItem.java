@@ -6,8 +6,6 @@
 package gamedevelopmentlatest;
 
 import java.awt.Graphics;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 
 /**
  *
@@ -65,7 +63,6 @@ public class EnemyThrowItem extends GameObject {
 
             if (getBounds().intersects(temp.getBounds())) {
                 if (temp.getId() == ID.PLAYER || temp.getId() == ID.GROUND || temp.getId() == ID.BOX && temp.getId() == ID.WALL) {
-                    GSpace.getPlayer().damagePlayer(5);
                     handler.removeObject(this);
                 }
             }

@@ -5,7 +5,6 @@
  */
 package gamedevelopmentlatest;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 /**
@@ -18,7 +17,6 @@ public class Enemy extends Character {
 
     public Enemy(int x, int y, ID id, int width, int height) {
         super(x, y, id);
-        
         speed = 0.6f;
         velX = speed;
         direction = Direction.RIGHT;
