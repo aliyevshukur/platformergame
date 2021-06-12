@@ -12,9 +12,9 @@ import java.awt.Graphics;
  *
  * @author Shukur
  */
-public class Wall extends GameObject {
+public class Box extends GameObject {
 
-    public Wall(int x, int y, ID id, int width, int height) {
+    public Box(int x, int y, ID id, int width, int height) {
         super(x, y, id);
         this.width = width;
         this.height = height;
@@ -26,7 +26,7 @@ public class Wall extends GameObject {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Animation.wall.get(0), x, y, width, height, null);
+        g.drawImage(Animation.box.get(0), x, y, width, height, null);
     }
 
 }

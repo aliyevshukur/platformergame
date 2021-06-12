@@ -20,8 +20,9 @@ public class Spawner extends Character {
 
     int tickCounter;
     long countEnemies= countEnemies();
+    GameObject obj;
 
-    public Spawner(int x, int y, ID id, int width, int height) {
+    public Spawner(int x, int y, ID id, int width, int height, GameObject obj) {
         super(x, y, id);
         speed = 0.0f;
         velX = 0;
@@ -30,6 +31,7 @@ public class Spawner extends Character {
         this.height = height;
         tickCounter = 0;
         onAir = false;
+        this.obj = obj;
     }
 
     @Override
@@ -46,7 +48,7 @@ public class Spawner extends Character {
 //        }
         //   }
         if (tickCounter == 500) {
-            handler.addObject(new Enemy(x, y, ID.ENEMY, 16 * size, 24 * size));
+            handler.addObject(obj);
             System.out.println("new enemy has been  created");
             tickCounter = 0;
 

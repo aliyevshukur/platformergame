@@ -27,7 +27,7 @@ public class EnemyThrowItem extends GameObject {
         super(x, y, id);
 
         velX = (direction == 1) ? -speed : speed;
-        velY =  speed / 15;
+        velY = speed / 15;
 
         this.width = height;
         this.height = height;
@@ -43,8 +43,7 @@ public class EnemyThrowItem extends GameObject {
             GSpace.getHandler().removeObject(this);
             destroyCount = 0;
         }
-        
-        System.out.println("PlayerY " + playerY);
+
         int diffX = playerX - x;
         int diffY = playerY - y;
 
@@ -52,9 +51,8 @@ public class EnemyThrowItem extends GameObject {
 
         x += speed * Math.cos(angle);
         y += speed * Math.sin(angle);
-        
-//        velY += gravity;
 
+//        velY += gravity;
         x += Math.round(velX);
         y += Math.round(velY);
 
@@ -67,8 +65,7 @@ public class EnemyThrowItem extends GameObject {
             GameObject temp = handler.getObjects().get(i);
 
             if (getBounds().intersects(temp.getBounds())) {
-                if (temp.getId() != ID.ENEMY && temp.getId() != ID.ROCK_THROWER_ENEMY && temp.getId() != ID.ENEMY_THROW_ITEM) {
-                    System.out.println("TEMP ID " + temp.getId());
+                if (temp.getId() == ID.PLAYER || temp.getId() == ID.GROUND || temp.getId() == ID.BOX && temp.getId() == ID.WALL) {
                     handler.removeObject(this);
                 }
             }

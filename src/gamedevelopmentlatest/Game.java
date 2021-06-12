@@ -41,8 +41,7 @@ public class Game extends Canvas implements Runnable {
         hud = GSpace.getHud();
 
         animation = new Animation();
-        
-        
+
         addKeyListener(new KeyInput());
         new Window(WIDTH, HEIGHT, "Game Development", this);
 
@@ -111,13 +110,14 @@ public class Game extends Canvas implements Runnable {
             return;
         }
         Graphics g = bs.getDrawGraphics();
-        
-        BufferedImage background = ImageLoader.loadImage("\\res\\background.png", this);
+
+//        BufferedImage background = ImageLoader.loadImage("\\res\\background.png", this);
+        BufferedImage background = ImageLoader.loadImage("res/background.png", this);
+
         g.drawImage(background, 0, 0, 384 * 3, 240 * 3, null);
-        
+
 //        g.setColor(Color.PINK);
 //        g.fillRect(0, 0, WIDTH, HEIGHT);
-
         Graphics2D g2d = (Graphics2D) g;
 
         g2d.translate(-camera.getX(), -camera.getY());
@@ -132,7 +132,9 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void loadLevel() {
-        ImageLoader.loadLevel(ImageLoader.loadImage("\\res\\world.png", this), handler, player);
+//        ImageLoader.loadLevel(ImageLoader.loadImage("\\res\\world.png", this), handler, player);
+        ImageLoader.loadLevel(ImageLoader.loadImage("res/world.png", this), handler, player);
+
     }
 
 }

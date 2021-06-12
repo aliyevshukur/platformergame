@@ -10,23 +10,25 @@ import java.awt.Graphics;
 
 /**
  *
- * @author Shukur
+ * @author dejavu
  */
-public class Wall extends GameObject {
+public class Decorations extends GameObject{
+    private int index = 0;
 
-    public Wall(int x, int y, ID id, int width, int height) {
+    public Decorations(int x, int y, ID id, int width, int height, int index) {
         super(x, y, id);
         this.width = width;
         this.height = height;
+        this.index = index;
     }
 
     @Override
     public void tick() {
-    }
+ }
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Animation.wall.get(0), x, y, width, height, null);
-    }
-
+        g.drawImage(Animation.decorations.get(index), x, y, width, height, null);
+ }
+    
 }

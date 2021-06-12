@@ -18,6 +18,8 @@ public class Animation {
     private static int animationClock = 0;
 
     static ArrayList<BufferedImage> wall;
+    static ArrayList<BufferedImage> box;
+    static ArrayList<BufferedImage> ladder;
     static ArrayList<BufferedImage> ground;
     static ArrayList<BufferedImage> player;
     static ArrayList<BufferedImage> surprizeBox;
@@ -26,13 +28,18 @@ public class Animation {
     static ArrayList<BufferedImage> bullet;
     static ArrayList<BufferedImage> rockThrower;
     static ArrayList<BufferedImage> spawner;
+    static ArrayList<BufferedImage> spawner2;
     static ArrayList<BufferedImage> enemyThrowItem;
+    static ArrayList<BufferedImage> decorations;
+    static ArrayList<BufferedImage> trambolin;
 
     private static BufferedImage spreadSheet;
 
     public Animation() {
         ground = new ArrayList();
         wall = new ArrayList();
+        box = new ArrayList();
+        ladder = new ArrayList();
         player = new ArrayList();
         surprizeBox = new ArrayList();
         platform = new ArrayList();
@@ -40,7 +47,10 @@ public class Animation {
         bullet = new ArrayList();
         rockThrower = new ArrayList();
         spawner = new ArrayList();
+        spawner2 = new ArrayList();
         enemyThrowItem = new ArrayList();
+        decorations = new ArrayList();
+        trambolin = new ArrayList();
 
         try {
             spreadSheet = ImageIO.read(getClass().getResource("res/tileset.png"));
@@ -69,11 +79,16 @@ public class Animation {
         loadSheet(ID.PLATFORM, 48, 16);
         loadSheet(ID.SURPRIZE_BOX, 16, 16);
         loadSheet(ID.WALL, 16, 16);
+        loadSheet(ID.BOX, 16, 16);
+        loadSheet(ID.LADDER, 16, 16);
         loadSheet(ID.ENEMY, 16, 24);
         loadSheet(ID.BULLET, 21, 10);
         loadSheet(ID.ROCK_THROWER_ENEMY, 20, 32);
         loadSheet(ID.SPAWNER, 24, 32);
+        loadSheet(ID.SPAWNER2, 24, 32);
         loadSheet(ID.ENEMY_THROW_ITEM, 16, 16);
+        loadSheet(ID.DECORATION, 112, 112);
+        loadSheet(ID.TRAMBOLIN, 48, 16);
 
     }
 
@@ -113,6 +128,18 @@ public class Animation {
                     row = 1;
                     list = wall;
                     break;
+                case BOX:
+                    begin = 15;
+                    count = 1;
+                    row = 1;
+                    list = box;
+                    break;
+                case LADDER:
+                    begin = 16;
+                    count = 1;
+                    row = 1;
+                    list = ladder;
+                    break;
                 case ENEMY:
                     begin = 0;
                     count = 26;
@@ -137,11 +164,29 @@ public class Animation {
                     row = 3;
                     list = spawner;
                     break;
+                case SPAWNER2:
+                    begin = 5;
+                    count = 4;
+                    row = 3;
+                    list = spawner2;
+                    break;
                 case ENEMY_THROW_ITEM:
                     begin = 10;
                     count = 3;
                     row = 8;
                     list = enemyThrowItem;
+                    break;
+                case DECORATION:
+                    begin = 0;
+                    count = 6;
+                    row = 1;
+                    list = decorations;
+                    break;
+                case TRAMBOLIN:
+                    begin = 0;
+                    count = 13;
+                    row = 1;
+                    list = trambolin;
                     break;
                 default:
                     list = new ArrayList();
@@ -149,18 +194,24 @@ public class Animation {
             }
 
         }
-        int step = 16;
-        if (id == ID.SPAWNER || id == ID.ROCK_THROWER_ENEMY) {
+        int step;
+        if (id == ID.SPAWNER || id == ID.SPAWNER2 || id == ID.ROCK_THROWER_ENEMY) {
             step = 32;
+        } else if (id == ID.DECORATION) {
+            step = 96;
+        } else {
+            step = 16;
         }
+
         for (int i = begin; i <= (row + begin); ++i) {
             list.add(spreadSheet.getSubimage(step * i, 16 * count, bitWidth, bitHeight));
         }
-
+        System.out.println("SIZE" + list.size());
         return list;
     }
 
     public static void animateObject(Graphics g, GameObject obj) {
+
         int index = 0;
 
         int leftEnd = 0;
@@ -235,6 +286,14 @@ public class Animation {
                     jumpLeft = 7;
                     array = spawner;
                     break;
+                case SPAWNER2:
+                    leftEnd = 1;
+                    rightEnd = 0;
+                    jumpRight = 0;
+                    idle = 1;
+                    jumpLeft = 7;
+                    array = spawner2;
+                    break;
                 case ENEMY_THROW_ITEM:
                     leftEnd = 3;
                     rightEnd = 3;
@@ -264,7 +323,6 @@ public class Animation {
             } else if (obj.direction == 2) {
 
                 index = obj.velX > 0.5 ? rightEnd - obj.getX() % ((leftEnd + 1) * 10) / 10 : idle - animationClock % 20 / 10;
-
                 g.drawImage(array.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
 
             }

@@ -26,7 +26,7 @@ public class RockThrowerEnemy extends Character {
 
         } else {
 
-            if (throwCooldown < 200) {
+            if (throwCooldown < 400) {
                 throwCooldown++;
             }
 
@@ -57,7 +57,7 @@ public class RockThrowerEnemy extends Character {
                     direction = 1;
                 }
 
-                if(throwCooldown >= 200){
+                if(throwCooldown >= 400){
                     throwRock();
                     throwCooldown = 0;
                 }

@@ -65,7 +65,7 @@ public class GSpace {
 
     public static Player getPlayer() {
         if (player == null) {
-            player = new Player(10, 10, ID.PLAYER);
+            player = new Player(160, 640, ID.PLAYER);
             if (handler == null) {
                 getHandler();
                 handler.addObject(player);

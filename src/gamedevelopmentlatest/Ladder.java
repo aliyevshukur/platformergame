@@ -5,16 +5,15 @@
  */
 package gamedevelopmentlatest;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 /**
  *
- * @author Shukur
+ * @author dejavu
  */
-public class Wall extends GameObject {
+public class Ladder extends GameObject {
 
-    public Wall(int x, int y, ID id, int width, int height) {
+    public Ladder(int x, int y, ID id, int width, int height) {
         super(x, y, id);
         this.width = width;
         this.height = height;
@@ -26,7 +25,7 @@ public class Wall extends GameObject {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Animation.wall.get(0), x, y, width, height, null);
+        g.drawImage(Animation.ladder.get(0), x, y, width, height, null);
     }
 
 }

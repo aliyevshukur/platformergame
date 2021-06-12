@@ -96,6 +96,14 @@ public class Player extends Character {
                     velX += speed;
                 }
 
+                if (keyPressed[3]) {
+                    System.out.println("CLIMB " + climbing);
+
+                    if (climbing) {
+                        y -= 6;
+                    }
+                }
+
                 if (keyPressed[0]) {
                     if (!isJumping) {
                         velY -= jumpingSpeed;
@@ -120,7 +128,6 @@ public class Player extends Character {
         }
 
         if (keyPressed[6] && bulletCount > 30) {
-            System.out.println("WORKINGGGGG");
             bulletCount = 0;
             handler.addObject(new Bullet(x + 15, y + 30, ID.BULLET, direction, 1));
         }
@@ -141,7 +148,6 @@ public class Player extends Character {
             health -= point;
             damageCooldown = 0;
         }
-        System.out.println("Health" + health);
         if (health <= 0) {
             handler.removeObject(this);
         }
