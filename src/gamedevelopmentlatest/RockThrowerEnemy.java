@@ -77,7 +77,9 @@ public class RockThrowerEnemy extends Character {
     }
 
     public void throwRock() {
-        handler.addObject(new EnemyThrowItem(x, y + 20, ID.ENEMY_THROW_ITEM, direction, 16 * GSpace.multSize, 16 * GSpace.multSize));
+        handler.addObject(
+                new EnemyThrowItem(x, y + 20, ID.ENEMY_THROW_ITEM, direction, 16 * GSpace.multSize, 16 * GSpace.multSize)
+        );
     }
 
     @Override
