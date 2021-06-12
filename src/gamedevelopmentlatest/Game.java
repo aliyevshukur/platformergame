@@ -36,7 +36,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void initGame() {
-        String path = "C:\\Users\\Ziya\\Downloads\\platformergame-main\\src\\gamedevelopmentlatest\\res\\sound.wav";
+        String path = "res/sound.wav";
         gameSound = new Sound(path);
         gameSound.startThread();
         gameSound.play();

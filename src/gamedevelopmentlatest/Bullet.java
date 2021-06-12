@@ -33,7 +33,7 @@ public class Bullet extends GameObject {
         }
         width = 41;
         height = 20;
-        bulletSound = new Sound("C:\\Users\\Ziya\\Downloads\\platformergame-main\\src\\gamedevelopmentlatest\\res\\sword.wav");
+        bulletSound = new Sound("res/sword.wav");
         bulletSound.startThread();
         bulletSound.play();
     }

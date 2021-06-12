@@ -39,7 +39,7 @@ public class Player extends Character {
         keyPressed[4] = false;
         keyPressed[5] = false;
         keyPressed[6] = false; // shoot
-        this.jumpingSound = new Sound("C:\\Users\\Ziya\\Downloads\\platformergame-main\\src\\gamedevelopmentlatest\\res\\jump.wav");
+        this.jumpingSound = new Sound("res/jump.wav");
         jumpingSound.startThread();
 
     }
