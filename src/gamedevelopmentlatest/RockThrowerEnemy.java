@@ -5,7 +5,7 @@ import java.awt.*;
 public class RockThrowerEnemy extends Character {
 
     public int hitCount = 0;
-    public int throwCooldown = 100;
+    public int throwCooldown = 0;
 
     public RockThrowerEnemy(int x, int y, ID id, int width, int height) {
         super(x, y, id);
@@ -26,7 +26,7 @@ public class RockThrowerEnemy extends Character {
 
         } else {
 
-            if (throwCooldown < 400) {
+            if (throwCooldown <= 400) {
                 throwCooldown++;
             }
 

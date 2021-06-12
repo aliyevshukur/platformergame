@@ -49,7 +49,6 @@ public class Spawner extends Character {
         //   }
         if (tickCounter == 500) {
             handler.addObject(obj);
-            System.out.println("new enemy has been  created");
             tickCounter = 0;
 
 //        if (!alive) {

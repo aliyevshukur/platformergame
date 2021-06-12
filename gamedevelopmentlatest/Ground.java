@@ -34,19 +34,6 @@ public class Ground extends GameObject {
 
     @Override
     public void render(Graphics g) {
-        // 0 - 5 0-2 surface 3-5 ground
-//        switch (type) {
-//            case "surface":
-//                order = 0;
-//            case "underground":
-//                order = 4;
-//            case "edge1":
-//                order = 1;
-//            case "edge2":
-//                order = 2;
-//        }
-//        System.out.println("TYPE " + type + " " + order);
-
         g.drawImage(Animation.ground.get(order), x, y, width, height, null);
     }
 

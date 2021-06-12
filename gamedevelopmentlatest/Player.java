@@ -97,8 +97,6 @@ public class Player extends Character {
                 }
 
                 if (keyPressed[3]) {
-                    System.out.println("CLIMB " + climbing);
-
                     if (climbing) {
                         y -= 6;
                     }

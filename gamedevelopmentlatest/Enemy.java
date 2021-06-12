@@ -62,12 +62,6 @@ public class Enemy extends Character {
         collision();
     }
 
-    public void hit(GameObject obj) {
-        // spesific behaviour of enemy when it hist the player
-        alive = false;
-        System.out.println("Eshedu en la liahe illelah");
-    }
-
     @Override
     public void render(Graphics g) {
         super.render(g);
