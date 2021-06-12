@@ -18,7 +18,7 @@ import java.awt.Graphics;
  */
 public class Spawner extends Character {
 
-    int tickCounter;
+    int tickCounter = 0;
     long countEnemies = countEnemies();
     GameObject obj;
 
@@ -39,13 +39,10 @@ public class Spawner extends Character {
         tickCounter++;
 
         if (!alive) {
-      
-                handler.removeObject(this);
-            
-
+            handler.removeObject(this);
         }
 
-        if (tickCounter == 500) {
+        if (tickCounter >= 100 && countEnemies <= 6) {
             handler.addObject(obj);
             tickCounter = 0;
 

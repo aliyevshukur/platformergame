@@ -99,18 +99,6 @@ public abstract class Character extends GameObject {
                         }
                     }
                     break;
-
-                case ENEMY_THROW_ITEM:
-                    if (getBounds().intersects(temp.getBounds())) {
-                        if (id == ID.PLAYER) {
-                            health -= health >= 10 ? 10 : health;
-                            if (health <= 0) {
-                                alive = false;
-                            }
-                        }
-                    }
-                    break;
-
                 case WALL:
                     if (getBounds(BoundType.UNDER_BOUND).intersects(temp.getBounds())) {
                         onAirTemp = false;
