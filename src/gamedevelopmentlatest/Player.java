@@ -24,7 +24,7 @@ public class Player extends Character {
     public Player(int x, int y, ID id) {
         super(x, y, id);
 
-        direction = 2;
+        direction = Direction.RIGHT;
         color = Color.white;
         velY = 0;
         velX = 0;
@@ -53,9 +53,9 @@ public class Player extends Character {
     @Override
     public void tick() {
         if (velX < -0.5) {
-            direction = 1;
+            direction = Direction.LEFT;
         } else if (velX > 0.5) {
-            direction = 2;
+            direction = Direction.RIGHT;
         }
 
         keyInput();
@@ -97,8 +97,6 @@ public class Player extends Character {
                 }
 
                 if (keyPressed[3]) {
-                    System.out.println("CLIMB " + climbing);
-
                     if (climbing) {
                         y -= 6;
                     }
@@ -124,12 +122,12 @@ public class Player extends Character {
 
         if (keyPressed[5] && bulletCount > 30) {
             bulletCount = 0;
-            handler.addObject(new Bullet(x + 15, y + 30, ID.BULLET, direction, 0));
+            handler.addObject(new Bullet(x + 15, y + 25, ID.BULLET, direction, Direction.NONE));
         }
 
         if (keyPressed[6] && bulletCount > 30) {
             bulletCount = 0;
-            handler.addObject(new Bullet(x + 15, y + 30, ID.BULLET, direction, 1));
+            handler.addObject(new Bullet(x + 15, y + 25, ID.BULLET, direction, Direction.DOWN));
         }
     }
 
@@ -137,9 +135,6 @@ public class Player extends Character {
     public void render(Graphics g) {
         super.render(g);
         Animation.animateCharacter(g, this);
-
-//        g.setColor(Color.black);
-//        g.drawRect(x - 20, y - 30, 2 * width, 20);
     }
 
     public void damagePlayer(int point) {

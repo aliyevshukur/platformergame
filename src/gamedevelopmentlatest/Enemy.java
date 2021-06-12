@@ -18,16 +18,16 @@ public class Enemy extends Character {
 
     public Enemy(int x, int y, ID id, int width, int height) {
         super(x, y, id);
+        
         speed = 0.6f;
         velX = speed;
-        direction = 2;
+        direction = Direction.RIGHT;
         this.width = width;
         this.height = height;
     }
 
     @Override
     public void tick() {
-
         if (!alive) {
             hitCount++;
 
@@ -48,12 +48,11 @@ public class Enemy extends Character {
 
             if (Math.abs(x - GSpace.getPlayer().getX()) > 24) {
                 if ((x - GSpace.getPlayer().getX()) > 0) {
-
-                    direction = 1;
+                    direction = Direction.LEFT;
                     velX = -1 * speed;
                     x += Math.round(velX);
                 } else if ((x - GSpace.getPlayer().getX()) < 0) {
-                    direction = 2;
+                    direction = Direction.RIGHT;
                     velX = 1 * speed;
                     x += Math.round(velX);
                 }
@@ -64,19 +63,10 @@ public class Enemy extends Character {
         collision();
     }
 
-    public void hit(GameObject obj) {
-        // spesific behaviour of enemy when it hist the player
-        alive = false;
-        System.out.println("Eshedu en la liahe illelah");
-    }
-
     @Override
     public void render(Graphics g) {
-
         super.render(g);
-
         Animation.animateCharacter(g, this);
-
     }
 
 }

@@ -30,15 +30,13 @@ public abstract class Character extends GameObject {
     protected void collision() {
 
         boolean onAirTemp = true;
-
         for (int i = 0; i < handler.getObjects().size(); i++) {
             GameObject temp = handler.getObjects().get(i);
 
             switch (temp.getId()) {
 
                 case GROUND:
-
-                    if (getBounds(boundsType.underBounds).intersects(temp.getBounds())) {
+                    if (getBounds(BoundType.UNDER_BOUND).intersects(temp.getBounds())) {
                         onAirTemp = false;
                         if (!onAir) {
                             isJumping = false;
@@ -50,10 +48,10 @@ public abstract class Character extends GameObject {
                         collideDownAndUp(temp);
                         collideLeftAndRight(temp);
                     }
-
                     break;
+
                 case PLATFORM:
-                    if (getBounds(boundsType.underBounds).intersects(temp.getBounds())) {
+                    if (getBounds(BoundType.UNDER_BOUND).intersects(temp.getBounds())) {
                         onAirTemp = false;
                         if (!onAir) {
                             isJumping = false;
@@ -64,7 +62,7 @@ public abstract class Character extends GameObject {
                     if (getBounds().intersects(temp.getBounds())) {
 
                         if (velY > 0) {
-                            if (getBounds(boundsType.downBounds).intersects(temp.getBounds(boundsType.upBounds))) {
+                            if (getBounds(BoundType.DOWN_BOUND).intersects(temp.getBounds(BoundType.UPPER_BOUND))) {
                                 y = temp.getY() - height;
 //                                velY = 0;
                                 isJumping = false;
@@ -72,26 +70,36 @@ public abstract class Character extends GameObject {
                         }
                     }
                     break;
-                case ENEMY:
 
-                    if (getBounds(boundsType.underBounds).intersects(temp.getBounds())) {
+                case ENEMY:
+                    if (getBounds(BoundType.UNDER_BOUND).intersects(temp.getBounds())) {
                         if (id == ID.PLAYER) {
                             GSpace.getPlayer().damagePlayer(5);
                         }
                     }
                     break;
+
                 case BULLET:
-                    if ((id == ID.ENEMY || id == ID.SPAWNER) && getBounds().intersects(temp.getBounds())) {
 
-                        health -= health >= 15 ? 15 : health;
-                        if (health <= 0) {
-                            alive = false;
-                            // decreaseSpawnHealth();
+                    if (getBounds().intersects(temp.getBounds())) {
+                        if ((id == ID.ENEMY || id == ID.ROCK_THROWER_ENEMY)) {
+                            health -= health >= 15 ? 15 : health;
+                            if (health <= 0) {
+                                alive = false;
+                            }
+                            handler.removeObject(temp);
+
+                        } else if ((id == ID.SPAWNER || id == ID.SPAWNER2)) {
+                            health -= health >= 5 ? 5 : health;
+                            if (health <= 0) {
+                                alive = false;
+                            }
+                            handler.removeObject(temp);
+
                         }
-
-                        handler.removeObject(temp);
                     }
                     break;
+
                 case ENEMY_THROW_ITEM:
                     if (getBounds().intersects(temp.getBounds())) {
                         if (id == ID.PLAYER) {
@@ -101,23 +109,22 @@ public abstract class Character extends GameObject {
                             }
                         }
                     }
-
                     break;
-                case WALL:
 
-                    if (getBounds(boundsType.underBounds).intersects(temp.getBounds())) {
+                case WALL:
+                    if (getBounds(BoundType.UNDER_BOUND).intersects(temp.getBounds())) {
                         onAirTemp = false;
                         if (!onAir) {
                             isJumping = false;
                             climbing = false;
                         }
                     }
-
                     collideDownAndUp(temp);
                     collideLeftAndRight(temp);
                     break;
+
                 case BOX:
-                    if (getBounds(boundsType.underBounds).intersects(temp.getBounds())) {
+                    if (getBounds(BoundType.UNDER_BOUND).intersects(temp.getBounds())) {
                         onAirTemp = false;
                         if (!onAir) {
                             isJumping = false;
@@ -126,14 +133,14 @@ public abstract class Character extends GameObject {
                     }
 
                     if (getBounds().intersects(temp.getBounds())) {
-
                         collideDownAndUp(temp);
                         collideLeftAndRight(temp);
 
                     }
                     break;
+
                 case LADDER:
-//                    if (getBounds(boundsType.underBounds).intersects(temp.getBounds())) {
+//                    if (getBounds(BoundType.UNDER_BOUND).intersects(temp.getBounds())) {
 //                        onAirTemp = false;
 //                        if (!onAir) {
 //                            isJumping = false;
@@ -142,7 +149,7 @@ public abstract class Character extends GameObject {
 //                    }
 //
                     if (getBounds().intersects(temp.getBounds())) {
-//                        if (getBounds(boundsType.downBounds).intersects(temp.getBounds(boundsType.upSurface))) {
+//                        if (getBounds(BoundType.DOWN_BOUND).intersects(temp.getBounds(BoundType.UP_SURFACE))) {
 //                            GSpace.getPlayer().setClimbing(false);
 //                            y = temp.getY() - height;
                         y -= 4.5;
@@ -151,10 +158,10 @@ public abstract class Character extends GameObject {
 
 //                        }
                     }
-
                     break;
+
                 case TRAMBOLIN:
-//                    if (getBounds(boundsType.underBounds).intersects(temp.getBounds())) {
+//                    if (getBounds(BoundType.UNDER_BOUND).intersects(temp.getBounds())) {
 //                        onAirTemp = false;
 //                        if (!onAir) {
 //                            isJumping = false;
@@ -163,17 +170,7 @@ public abstract class Character extends GameObject {
 //                    }
 //
                     if (getBounds().intersects(temp.getBounds())) {
-//                        if (getBounds(boundsType.downBounds).intersects(temp.getBounds(boundsType.upSurface))) {
-//                            GSpace.getPlayer().setClimbing(false);
-//                            y = temp.getY() - height;
-                        y -= 30;
-                        onAir = true;
-                        onAirTemp = true;
-                        isJumping = true;
-//                        } else {
-//                        GSpace.getPlayer().setClimbing(true);
-
-//                        }
+                        velY -= 5;
                     }
 
                     break;
@@ -186,7 +183,7 @@ public abstract class Character extends GameObject {
 
     public void collideDownAndUp(GameObject collapsedObj) {
         if (velY > 0) {
-            if (getBounds(boundsType.downBounds).intersects(collapsedObj.getBounds(boundsType.upBounds))) {
+            if (getBounds(BoundType.DOWN_BOUND).intersects(collapsedObj.getBounds(BoundType.UPPER_BOUND))) {
                 y = collapsedObj.getY() - height;
                 velY = 0;
                 isJumping = false;
@@ -195,7 +192,7 @@ public abstract class Character extends GameObject {
 
             }
         } else if (velY < 0) {
-            if (getBounds(boundsType.upBounds).intersects(collapsedObj.getBounds(boundsType.downBounds))) {
+            if (getBounds(BoundType.UPPER_BOUND).intersects(collapsedObj.getBounds(BoundType.DOWN_BOUND))) {
                 y = collapsedObj.getY() + collapsedObj.getBounds().height;
                 velY *= -1.2;
                 isJumping = false;
@@ -209,21 +206,21 @@ public abstract class Character extends GameObject {
     public void collideLeftAndRight(GameObject collapsedObj) {
 
         if (velX > 0) {
-            if (getBounds(boundsType.rightBounds).intersects(collapsedObj.getBounds())) {
+            if (getBounds(BoundType.RIGHT_BOUND).intersects(collapsedObj.getBounds())) {
                 velX = 0;
                 x = collapsedObj.getX() - width;
 
                 if (id == ID.ROCK_THROWER_ENEMY) {
-                    direction = direction == 1 ? 2 : 1;
+                    direction = direction == Direction.LEFT ? Direction.RIGHT : Direction.LEFT;
                 }
             }
         } else if (velX < 0) {
-            if (getBounds(boundsType.leftBounds).intersects(collapsedObj.getBounds())) {
+            if (getBounds(BoundType.LEFT_BOUND).intersects(collapsedObj.getBounds())) {
                 velX = 0;
                 x = collapsedObj.getX() + collapsedObj.getWidth();
 
                 if (id == ID.ROCK_THROWER_ENEMY) {
-                    direction = direction == 1 ? 2 : 1;
+                    direction = direction == Direction.LEFT ? Direction.RIGHT : Direction.LEFT;
                 }
             }
         }
@@ -239,10 +236,9 @@ public abstract class Character extends GameObject {
     public void render(Graphics g
     ) {
         Color healthColor = Color.green;
-        if (id == ID.ENEMY) {
+        if (id == ID.ENEMY || id == ID.ROCK_THROWER_ENEMY || id == ID.SPAWNER || id == ID.SPAWNER2) {
             healthColor = Color.red;
         }
-//        System.out.println("WIDTH"+ health);
         g.setColor(healthColor);
         g.fillRect(x - 3, y - 10, width * health / 100, 10);
         g.setColor(Color.black);

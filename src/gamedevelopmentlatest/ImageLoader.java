@@ -6,6 +6,9 @@
 package gamedevelopmentlatest;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
@@ -18,8 +21,8 @@ public class ImageLoader {
 
         try {
             image = ImageIO.read(obj.getClass().getResource(path));
-        } catch (Exception ex) {
-            System.out.println("No pic found");
+        } catch (IOException ex) {
+            Logger.getLogger(ImageLoader.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(0);
         }
 
@@ -70,7 +73,7 @@ public class ImageLoader {
                 } else if (red == 200 && green == 255 && blue == 200) {
                     handler.addObject(new Decorations(xx * 32, yy * 25, ID.DECORATION, 96 * size, 96 * size, 1));
                 } else if (red == 10 && green == 20 && blue == 100) {
-                    handler.addObject(new Trambolin(xx * 32, yy * 32, ID.TRAMBOLIN, 48 * size, 16 * size));
+                    handler.addObject(new Trambolin(xx * 32 - 24, yy * 32 - 16, ID.TRAMBOLIN, 48 * size, 32 * size));
                 } else if (red == 0 && green == 0 && blue == 255) {
                     player.setX(300);
                     player.setY(500);

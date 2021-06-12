@@ -7,7 +7,10 @@ package gamedevelopmentlatest;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
@@ -54,12 +57,11 @@ public class Animation {
 
         try {
             spreadSheet = ImageIO.read(getClass().getResource("res/tileset.png"));
-        } catch (Exception e) {
-            System.out.println("Found no spreadsheet" + e);
+        } catch (IOException ex) {
+            Logger.getLogger(Animation.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         loadSpreadSheet();
-
     }
 
     public static int getClock() {
@@ -88,8 +90,7 @@ public class Animation {
         loadSheet(ID.SPAWNER2, 24, 32);
         loadSheet(ID.ENEMY_THROW_ITEM, 16, 16);
         loadSheet(ID.DECORATION, 112, 112);
-        loadSheet(ID.TRAMBOLIN, 48, 16);
-
+        loadSheet(ID.TRAMBOLIN, 48, 32);
     }
 
     private ArrayList<BufferedImage> loadSheet(ID id, int bitWidth, int bitHeight) {
@@ -103,7 +104,6 @@ public class Animation {
             list = new ArrayList();
         } else {
             switch (id) {
-
                 case PLAYER:
                     begin = 0; //col
                     count = 24; //row
@@ -192,7 +192,6 @@ public class Animation {
                     list = new ArrayList();
                     break;
             }
-
         }
         int step;
         if (id == ID.SPAWNER || id == ID.SPAWNER2 || id == ID.ROCK_THROWER_ENEMY) {
@@ -206,14 +205,11 @@ public class Animation {
         for (int i = begin; i <= (row + begin); ++i) {
             list.add(spreadSheet.getSubimage(step * i, 16 * count, bitWidth, bitHeight));
         }
-        System.out.println("SIZE" + list.size());
         return list;
     }
 
     public static void animateObject(Graphics g, GameObject obj) {
-
         int index = 0;
-
         int leftEnd = 0;
         int rightEnd = 0;
 
@@ -231,10 +227,10 @@ public class Animation {
             }
         }
 
-        if (obj.direction == 1) {
+        if (obj.direction == Direction.LEFT) {
             index = leftEnd - obj.getX() % ((leftEnd + 1) * 10) / 10;
             g.drawImage(array.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
-        } else if (obj.direction == 2) {
+        } else if (obj.direction == Direction.RIGHT) {
             index = rightEnd - obj.getX() % ((leftEnd + 1) * 10) / 10;
             g.drawImage(array.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
 
@@ -244,12 +240,12 @@ public class Animation {
 
     public static void animateCharacter(Graphics g, Character obj) {
         int index = 0;
-
         int leftEnd = 0;
         int rightEnd = 0;
         int jumpLeft = 0;
         int jumpRight = 0;
         int idle = 1;
+
         ArrayList<BufferedImage> array = new ArrayList<>();
 
         if (null != obj.getId()) {
@@ -259,7 +255,11 @@ public class Animation {
                     rightEnd = 17;
                     jumpLeft = 2;
                     jumpRight = 13;
-                    idle = 10;
+                    if (obj.direction == Direction.RIGHT) {
+                        idle = 10;
+                    } else if (obj.direction == Direction.LEFT) {
+                        idle = 8;
+                    }
                     array = player;
                     break;
                 case ENEMY:
@@ -275,7 +275,7 @@ public class Animation {
                     rightEnd = 9;
                     jumpRight = 7;
                     jumpLeft = 2;
-                    idle = obj.direction == 1 ? 4 : 6;
+                    idle = obj.direction == Direction.LEFT ? 4 : 6;
                     array = rockThrower;
                     break;
                 case SPAWNER:
@@ -309,22 +309,17 @@ public class Animation {
 
         if (obj.alive) {
             if (obj.onAir) {
-                if (obj.direction == 1) {
+                if (obj.direction == Direction.LEFT) {
                     g.drawImage(array.get(jumpLeft), obj.getX(), obj.getY(), obj.width, obj.height, null);
                 } else {
                     g.drawImage(array.get(jumpRight), obj.getX(), obj.getY(), obj.width, obj.height, null);
                 }
-            } else if (obj.direction == 1) {
-
+            } else if (obj.direction == Direction.LEFT) {
                 index = obj.velX < -0.5 ? leftEnd - obj.getX() % ((leftEnd + 1) * 10) / 10 : idle - animationClock % 20 / 10;
-
                 g.drawImage(array.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
-
-            } else if (obj.direction == 2) {
-
+            } else if (obj.direction == Direction.RIGHT) {
                 index = obj.velX > 0.5 ? rightEnd - obj.getX() % ((leftEnd + 1) * 10) / 10 : idle - animationClock % 20 / 10;
                 g.drawImage(array.get(index), obj.getX(), obj.getY(), obj.width, obj.height, null);
-
             }
         } else {
             index = idle - animationClock % 20 / 10;
