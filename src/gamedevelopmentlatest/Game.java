@@ -6,11 +6,12 @@
 package gamedevelopmentlatest;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,6 +30,7 @@ public class Game extends Canvas implements Runnable {
     private HUD hud;
     boolean running = false;
     private Animation animation;
+    private Sound gameSound;
 
     public Game() {
         initGame();
@@ -36,6 +38,10 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void initGame() {
+        String path = "C:\\Users\\Ziya\\Downloads\\platformergame-main\\src\\gamedevelopmentlatest\\res\\sound.wav";
+        gameSound = new Sound(path);
+        gameSound.startThread();
+        gameSound.play();
         handler = GSpace.getHandler();
         player = GSpace.getPlayer();
         camera = GSpace.getCamera();
