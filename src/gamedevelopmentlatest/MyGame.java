@@ -12,7 +12,7 @@ package gamedevelopmentlatest;
 public class MyGame {
 
     public static void main(String[] args) {
-        System.setProperty("sun.java2d.opengl", "true");
+//        System.setProperty("sun.java2d.opengl", "true");
         GSpace.setGame(new Game());
     }
 }

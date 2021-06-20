@@ -62,7 +62,10 @@ public class EnemyThrowItem extends GameObject {
             GameObject temp = handler.getObjects().get(i);
 
             if (getBounds().intersects(temp.getBounds())) {
-                if (temp.getId() == ID.PLAYER || temp.getId() == ID.GROUND || temp.getId() == ID.BOX && temp.getId() == ID.WALL) {
+                if (temp.getId() == ID.GROUND || temp.getId() == ID.BOX && temp.getId() == ID.WALL) {
+                    handler.removeObject(this);
+                } else if (temp.getId() == ID.PLAYER) {
+                    GSpace.getPlayer().damagePlayer(5);
                     handler.removeObject(this);
                 }
             }

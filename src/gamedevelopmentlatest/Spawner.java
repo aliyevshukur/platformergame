@@ -9,15 +9,19 @@
  * and open the template in the editor.
  */
 package gamedevelopmentlatest;
+
 import java.awt.Graphics;
+
 /**
  *
  * @author Shukur
  */
 public class Spawner extends Character {
+
     int tickCounter;
     long countEnemies = countEnemies();
     GameObject obj;
+
     public Spawner(int x, int y, ID id, int width, int height, GameObject obj) {
         super(x, y, id);
         velX = 0;
@@ -28,21 +32,28 @@ public class Spawner extends Character {
         onAir = false;
         this.obj = obj;
     }
+
     @Override
     public void tick() {
         tickCounter++;
         if (!alive) {
             handler.removeObject(this);
         }
-        if (tickCounter == 300 && countEnemies() <= 3) {
-            handler.addObject(new Enemy(obj.getX(),obj.getY(),obj.getId(),obj.getWidth(),obj.getHeight()));
+        if (tickCounter >= 300 && countEnemies() <= 3) {
+            if (ID.SPAWNER == id) {
+                handler.addObject(new Enemy(obj.getX(), obj.getY(), obj.getId(), obj.getWidth(), obj.getHeight()));
+            } else {
+                handler.addObject(new RockThrowerEnemy(obj.getX(), obj.getY(), obj.getId(), obj.getWidth(), obj.getHeight()));
+            }
             tickCounter = 0;
         }
         collision();
     }
+
     private long countEnemies() {
         return handler.getObjects().stream().filter(obj -> obj.id == ID.ENEMY).count();
     }
+
     @Override
     public void render(Graphics g) {
         super.render(g);
